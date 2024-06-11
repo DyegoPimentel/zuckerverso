@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "dist/historias-do-brasil/browser",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
