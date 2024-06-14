@@ -26,6 +26,7 @@ jobs:
           echo "  UNSPLASH_API_KEY: '_PdesxnTZDlu8XwPdCow0QfT1GmUdVRb0WjFxCkxVJw'," >> src/environments/environment.ts
           echo "  OPENSEA_API_KEY: '6b430991dca241ce9a4a3a5148734f93'," >> src/environments/environment.ts
           echo "};" >> src/environments/environment.ts
+          cd src/environments
       
       - name: Display environment file content
         run: cat src/environments/environment.ts
