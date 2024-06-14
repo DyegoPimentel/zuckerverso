@@ -1,2 +1,5 @@
-<menu></menu>
-<p>list works!</p>
+<div class="grid grid-cols-4 gap-4">
+    
+    <img *ngFor="let nft of nftList?.nfts" [src]="nft?.image_url">
+
+</div>
