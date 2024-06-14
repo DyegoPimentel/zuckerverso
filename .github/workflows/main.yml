@@ -21,11 +21,13 @@ jobs:
       - name: Check environment files
         run: |
           if [ ! -f src/environments/environment.ts ]; then
-            echo "src/environments/environment.ts not found"
-            mkdir src/environments
-            echo "export const environment = {"
-
-            echo "};" >> src/environment/environment.ts
+  
+            mkdir -p src/environments
+            echo "export const environment = {" > src/environments/environment.ts
+            echo "  production: true," >> src/environments/environment.ts
+            echo "  UNSPLASH_API_KEY: '${{ secrets.UNSPLASH_API_KEY }}'," >> src/environments/environment.ts
+            echo "  OPENSEA_API_KEY: '${{ secrets.OPENSEA_API_KEY }}'" >> src/environments/environment.ts
+            echo "};" >> src/environments/environment.ts
             cd src
             ls -al
             cat src/environment/environment.ts
