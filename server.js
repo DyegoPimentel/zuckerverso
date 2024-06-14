@@ -7,8 +7,8 @@ const file = "environment.ts";
 const prodFile = "environment.prod.ts"; // For production deployment
 
 const content = `
-    ${process.env.OPENSEA_API_KEY} 
-    ${process.env.OPENSEA_API_KEY}
+    OPENSEA_API_KEY: ${process.env.OPENSEA_API_KEY} 
+    UNSPLASH_API_KEY: ${process.env.UNSPLASH_API_KEY}
 `;
 
 console.log('content', content);
