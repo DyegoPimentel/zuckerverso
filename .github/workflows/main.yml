@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Create environment
+      - name: Create environment file
         run: |
           mkdir -p src/environments
           echo "export const environment = {" > src/environments/environment.ts
@@ -26,23 +26,6 @@ jobs:
           echo "  UNSPLASH_API_KEY: '${{ secrets.UNSPLASH_API_KEY }}'," >> src/environments/environment.ts
           echo "  OPENSEA_API_KEY: '${{ secrets.OPENSEA_API_KEY }}'," >> src/environments/environment.ts
           echo "};" >> src/environments/environment.ts
-          cd src/environments
-          ls -al
-      
-      - name: Display environment file content
-        run: cat src/environments/environment.ts
-        
-      # - name: Check environment files
-      #   run: |
-      #     if [ ! -f src/environments/environment.ts ]; then
-      #       cd src/envionment
-      #       ls -al
-      #       exit 1
-      #     fi
-      #     if [ ! -f src/environments/environment.prod.ts ]; then
-      #       echo "src/environments/environment.prod.ts not found"
-      #       exit 1
-      #     fi
 
       - name: Build dependencies
         run: npm run build
