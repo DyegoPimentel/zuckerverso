@@ -22,6 +22,7 @@ jobs:
         run: |
           if [ ! -f src/environments/environment.ts ]; then
             echo "src/environments/environment.ts not found"
+            cd src
             ls -al
             exit 1
           fi
