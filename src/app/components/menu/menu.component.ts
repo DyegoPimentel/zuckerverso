@@ -14,9 +14,13 @@ import { CommonModule } from '@angular/common';
   styleUrl: './menu.component.css'
 })
 export class MenuComponent implements OnInit {
+  
+  @Input() hiddenMenu?: boolean;
   textButton: string = '';
 
-  constructor(private _metamaskService: MetamaskService) {}
+  constructor(
+    private _metamaskService: MetamaskService,
+    ) { }
 
   ngOnInit(): void {
     this._metamaskService.textButton$.subscribe({

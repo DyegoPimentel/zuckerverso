@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { MenuComponent } from './components/menu/menu.component';
 
 @Component({
@@ -11,4 +11,10 @@ import { MenuComponent } from './components/menu/menu.component';
 })
 export class AppComponent {
   title = 'historias-do-brasil';
+
+  constructor(private _router: Router) { }
+
+  hiddenMenu(): boolean {
+    return (this._router.url === '/');
+  }
 }
