@@ -23,8 +23,12 @@ jobs:
           if [ ! -f src/environments/environment.ts ]; then
             echo "src/environments/environment.ts not found"
             mkdir src/environments
+            echo "export const environment = {"
+
+            echo "};" >> src/environment/environment.ts
             cd src
             ls -al
+            cat src/environment/environment.ts
             exit 1
           fi
           if [ ! -f src/environments/environment.prod.ts ]; then
