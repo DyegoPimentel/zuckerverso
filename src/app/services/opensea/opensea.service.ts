@@ -10,7 +10,7 @@ export class OpenseaService {
 
   private httpClient: HttpClient = inject(HttpClient);
   private url: string = 'https://api.opensea.io/api/v2';
-  private API_KEY: string = environment.OPENSEA_API_KEY;
+  private API_KEY: any = environment.OPENSEA_API_KEY;
 
   constructor() { }
 
