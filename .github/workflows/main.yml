@@ -23,8 +23,8 @@ jobs:
           mkdir -p src/environments
           echo "export const environment = {" > src/environments/environment.ts
           echo "  production: false," >> src/environments/environment.ts
-          echo "  UNSPLASH_API_KEY: ${{ secrets.UNSPLASH_API_KEY }}," >> src/environments/environment.ts
-          echo "  OPENSEA_API_KEY: ${{ secrets.OPENSEA_API_KEY }}," >> src/environments/environment.ts
+          echo "  UNSPLASH_API_KEY: '${{ secrets.UNSPLASH_API_KEY }}'," >> src/environments/environment.ts
+          echo "  OPENSEA_API_KEY: '${{ secrets.OPENSEA_API_KEY }}'," >> src/environments/environment.ts
           echo "};" >> src/environments/environment.ts
           cd src/environments
           ls -al
