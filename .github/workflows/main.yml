@@ -22,6 +22,7 @@ jobs:
         run: |
           if [ ! -f src/environments/environment.ts ]; then
             echo "src/environments/environment.ts not found"
+            ls -al
             exit 1
           fi
           if [ ! -f src/environments/environment.prod.ts ]; then
@@ -34,7 +35,7 @@ jobs:
 
       - name: Archive production artifact
         uses: actions/upload-artifact@main
-        
+
         with: 
           name: dist
           path: dist/historias-do-brasil/browser
