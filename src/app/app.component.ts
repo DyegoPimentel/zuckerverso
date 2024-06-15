@@ -15,6 +15,6 @@ export class AppComponent {
   constructor(private _router: Router) { }
 
   hiddenMenu(): boolean {
-    return (this._router.url === '/');
+    return (this._router.url === '/home');
   }
 }

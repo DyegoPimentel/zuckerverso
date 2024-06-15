@@ -29,8 +29,6 @@ export class MetamaskService {
   constructor() { 
     if (this.isMetaMaskInstalled()) {
       this.provider = new ethers.BrowserProvider(window.ethereum);
-      console.log('constructor provider', this.provider);
-      this.isConnected();
     } else {
       console.log('Instale a metamask para fazer o login.');
     }
@@ -81,6 +79,21 @@ export class MetamaskService {
     }
   }
   
+  async checkIfLoggedIn(): Promise<boolean> {
+    if (!this.provider) {
+      return false;
+    }
+
+    try {
+      const accounts = await this.provider.listAccounts();
+      console.log('esta conectada 1: ', accounts);
+      return accounts.length > 0;
+    } catch (error) {
+      console.error('Error checking if logged in:', error);
+      return false;
+    }
+  }
+
   isMetaMaskInstalled(): boolean {
     return typeof window.ethereum !== 'undefined';
   }
