@@ -4,9 +4,11 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import { UnsplashService } from '../../services/unsplash/unsplash.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {  HttpClientModule } from '@angular/common/http';
 import { MetamaskService } from '../../services/authentication/metamask.service';
 import { FirebaseService } from '../../services/authentication/firebase.service';
+import { Router } from '@angular/router';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -18,9 +20,11 @@ import { FirebaseService } from '../../services/authentication/firebase.service'
 })
 export default class HomeComponent implements OnInit {
   textButton: string = '';
+  isLoggedIn: boolean = false;
 
   constructor(
-    private _metamaskService: MetamaskService
+    private _metamaskService: MetamaskService,
+    private _router: Router,
     ) {
       this._metamaskService.textButton$
       .subscribe({
@@ -29,6 +33,8 @@ export default class HomeComponent implements OnInit {
         },
         error: (e) => {console.log('error',e);}
       });
+
+      this.isConnected();
   }
 
   ngOnInit(): void {
@@ -45,11 +51,24 @@ export default class HomeComponent implements OnInit {
     //     console.log('error', e);
     //   }
     // })
+
+    console.log('home');
   }
     
-  
+  private isConnected(): void {
+    from(this._metamaskService.isConnected())
+    .subscribe({
+      next: (status) => {
+        this.isLoggedIn = status;
+      },
+    });
+  }
 
   metamaskButton(): void {
     this._metamaskService.connectToMetaMask();
+  }
+
+  goToList(): void {
+    this._router.navigate(['/collection/list']);
   }
 }

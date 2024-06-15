@@ -15,12 +15,11 @@ declare global {
 })
 export class MetamaskService {
 
-  tokenMetamask$: Subject<string> = new Subject<string>();
+  private tokenMetamaskSubject = new BehaviorSubject<string>('');
+  public tokenMetamask$ = this.tokenMetamaskSubject.asObservable();
 
   private textButtonSubject = new BehaviorSubject<string>('Conecte sua Metamask');
   public textButton$ = this.textButtonSubject.asObservable();
-
-  private isConnecting: boolean = false;
 
   private provider: ethers.BrowserProvider | undefined;
   private signer: ethers.Signer | undefined;
@@ -29,6 +28,7 @@ export class MetamaskService {
   constructor() { 
     if (this.isMetaMaskInstalled()) {
       this.provider = new ethers.BrowserProvider(window.ethereum);
+      console.log('this.provider service', this.provider);
     } else {
       console.log('Instale a metamask para fazer o login.');
     }
@@ -68,28 +68,15 @@ export class MetamaskService {
     if (!this.provider) return false;
 
     try {
-      await this.provider.send('eth_requestAccounts', []);
       this.signer = await this.provider.getSigner();
-      this.setTextButton(await this.signer.getAddress());
+      const token: string = await this.signer.getAddress();
+      console.log('token isConnected', token);
+      this.setTextButton(token);
+      this.tokenMetamaskSubject.next(token);
 
       const address = await this.signer.getAddress();
       return !!address;
     } catch (error) {
-      return false;
-    }
-  }
-  
-  async checkIfLoggedIn(): Promise<boolean> {
-    if (!this.provider) {
-      return false;
-    }
-
-    try {
-      const accounts = await this.provider.listAccounts();
-      console.log('esta conectada 1: ', accounts);
-      return accounts.length > 0;
-    } catch (error) {
-      console.error('Error checking if logged in:', error);
       return false;
     }
   }
