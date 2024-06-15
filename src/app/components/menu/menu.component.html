@@ -1,10 +1,6 @@
 
 <nav *ngIf="!hiddenMenu" class="flex flex-row justify-between items-center gap-4 bg-[#3C095E] text-white p-4 w-full">
     <div>HISTORIAS DO BRASIL</div>
-    <ul class="flex flex-row gap-4">
-        <li>teste1</li>
-        <li>{{hiddenMenu}}</li>
-    </ul>
     <button mat-raised-button (click)="metamaskButton()">
         <mat-icon class="scale-150"><img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg"></mat-icon>
         <span>{{textButton}}</span> 

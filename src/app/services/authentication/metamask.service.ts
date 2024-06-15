@@ -29,7 +29,10 @@ export class MetamaskService {
   constructor() { 
     if (this.isMetaMaskInstalled()) {
       this.provider = new ethers.BrowserProvider(window.ethereum);
+      console.log('constructor provider', this.provider);
       this.isConnected();
+    } else {
+      console.log('Instale a metamask para fazer o login.');
     }
     
     
