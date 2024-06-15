@@ -17,7 +17,10 @@ export default class ListComponent implements OnInit {
 
   nftList: nftsByCollection | undefined;
 
-  constructor(private _openSea: OpenseaService) {}
+  constructor(
+    private _openSea: OpenseaService,
+    private _metaMaskService: MetamaskService
+    ) { }
 
   ngOnInit(): void {
     this.getNfts();
