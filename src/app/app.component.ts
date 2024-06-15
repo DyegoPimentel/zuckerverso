@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { MenuComponent } from './components/menu/menu.component';
 
 @Component({
@@ -11,10 +11,18 @@ import { MenuComponent } from './components/menu/menu.component';
 })
 export class AppComponent {
   title = 'historias-do-brasil';
-
-  constructor(private _router: Router) { }
-
-  hiddenMenu(): boolean {
-    return (this._router.url === '/home');
+  hiddenMenu: boolean = true;
+  constructor(
+    private _router: Router,
+    private _route: ActivatedRoute
+  ) {
+    this._router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.hiddenMenu = (event.url === '/home');
+      }
+    });
   }
+
+
+
 }

@@ -20,7 +20,9 @@ export class MenuComponent implements OnInit {
 
   constructor(
     private _metamaskService: MetamaskService,
-    ) { }
+    ) { 
+      console.log('menu');
+    }
 
   ngOnInit(): void {
     this._metamaskService.textButton$.subscribe({
