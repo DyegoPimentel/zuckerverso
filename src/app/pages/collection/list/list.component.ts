@@ -7,7 +7,9 @@ import { Nft, NftsByCollection } from '../../../services/opensea/opensea';
 import { MatTooltipModule} from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { identity } from 'rxjs';
 
 @Component({
   selector: 'app-list',
@@ -19,11 +21,15 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 })
 export default class ListComponent implements OnInit {
   nftList: NftsByCollection | undefined;
+  mockCardArray: number[] = Array(32).fill(0).map((x, i) => i);
+  cardsLoaded: string[] = [];
 
   constructor(
-    private route: ActivatedRoute,
+    private _route: ActivatedRoute,
+    private _router: Router,
     private _openSea: OpenseaService,
-    private _metaMaskService: MetamaskService
+    private _metaMaskService: MetamaskService,
+    private _snackBar: MatSnackBar,
     ) { }
 
   ngOnInit(): void {
@@ -35,11 +41,37 @@ export default class ListComponent implements OnInit {
     console.log('comprar nft', nft);
   }
 
+  goToNftDetail(nft: any): void {
+    this._router.navigate(['/collection/nft', nft.identifier]);
+  }
+
   getNfts(): void {
-    this._openSea.getNftsByCollection('piratenation')
-    .subscribe((res: NftsByCollection) => {
-      console.log('res opensea',res);
-      this.nftList = res;
+    this._openSea.getNftsByCollection('piratenation',200)
+    .subscribe({
+      next: (res: NftsByCollection) => {
+        console.log('res opensea',res);
+        this.nftList = res;
+      },
+      error: (error) => {
+        console.error(error);
+        this._snackBar.open('Ops... Este Zucker está em outro universo 🚀', 'Desmaterializar', {
+          horizontalPosition: 'start',
+          verticalPosition: 'top',
+          panelClass: ['custom-snackbar']
+        });
+        this._router.navigate(['/collection/list']);
+      },
+      complete: () => {
+      }
+
     })
+  }
+
+  isVisible(identify: string): boolean {
+    return this.cardsLoaded.some(id => identify = id);
+  }
+
+  imageLoaded(id: string): void {
+    this.cardsLoaded.push(id);
   }
 }

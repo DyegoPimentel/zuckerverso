@@ -1,8 +1,14 @@
 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 p-10 gap-8">
     
     @for (nft of nftList?.nfts; track nft) {
-        <div class="relative flex flex-col rounded-lg outline outline-offset-2 outline-2 outline-slate-200 hover:outline-[#3C095E] overflow-hidden hover:scale-110 cursor-pointer">
-            <div [routerLink]="['/collection/nft',nft.identifier]" class="absolute w-full h-full hover:bg-gradient-to-b hover:from-black/[.4] hover:bg-opacity-50" matTooltip="Clique para ver os detalhes deste NFT">
+        <div *ngIf="!isVisible(nft.identifier)">
+            <ng-container *ngTemplateOutlet="loadingCard"></ng-container>
+        </div>
+        <div [ngClass]="{
+            'hidden': !isVisible(nft.identifier),
+            'relative flex flex-col rounded-lg outline outline-offset-2 outline-2 outline-slate-200 hover:outline-primary overflow-hidden hover:scale-110 cursor-pointer': true
+        }">
+            <div (click)="goToNftDetail(nft)" class="absolute w-full h-full hover:bg-gradient-to-b hover:from-black/[.4] hover:bg-opacity-50" matTooltip="Clique para ver os detalhes deste NFT">
                 <div class="absolute text-white flex flex-col h-full">
                     <div class="flex flex-row p-2 gap-1 items-center " matTooltip="Favorite este Zuck" [matTooltipPosition]="'right'">
                         <mat-icon [ngClass]="{
@@ -15,10 +21,10 @@
             </div>
 
             <div>
-                <img [src]="nft.display_animation_url"/>
+                <img class="h-52" [src]="nft.display_animation_url" (load)="imageLoaded(nft.identifier)"/>
             </div>
             <div class="flex flex-row items-center w-full z-10">
-                <button (click)="comprar(nft)" class="flex-auto py-2 bg-[#3C095E] text-white hover:bg-green-500 tracking-wider font-semibold text-lg">
+                <button (click)="comprar(nft)" class="flex-auto py-2 bg-primary text-white hover:bg-green-500 tracking-wider font-semibold text-lg">
                     COMPRAR
                 </button>
                 <button mat-button [matMenuTriggerFor]="shareMenu" class="flex justify-center items-center min-h-full min-w-8 bg-yellow-400" matTooltip="Compartilhe">
@@ -37,3 +43,32 @@
     }
 
 </div>
+
+
+<ng-template #loadingCard>
+    <div class="relative flex flex-col rounded-lg outline outline-offset-2 outline-2 outline-slate-200 overflow-hidden cursor-wait">
+      <div class="animate-pulse absolute w-full h-full">
+          <div class="absolute text-white flex flex-col h-full w-full">
+              <div class="flex flex-row p-2 gap-1 items-center w-full">
+                  <mat-icon [ngClass]="'w-5 text-slate-200 rounded drop-shadow-sm'">star</mat-icon>
+                  <span class=" h-4 w-1/2 bg-slate-200 rounded drop-shadow-sm"></span>
+              </div>
+          </div>
+          <div class="flex flex-col justify-center items-center h-full gap-4">
+              <mat-icon class="text-slate-200 scale-[3] h-full w-full">image</mat-icon>
+          </div>
+      </div>
+  
+      <div class="flex flex-col gap-2 h-52 bg-slate-50">
+          
+      </div>
+      <div class="flex flex-row items-center w-full z-10 h-8">
+          <div class="flex-auto py-2 h-8 bg-slate-200">
+          
+          </div>
+          <div class="flex justify-center items-center min-h-full min-w-8 h-8 bg-slate-100">
+              <mat-icon class="text-slate-300 scale-75">share</mat-icon>
+          </div>
+      </div>
+    </div>
+</ng-template>

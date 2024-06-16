@@ -1,1 +1,23 @@
-<p>nft works!</p>
+<div *ngIf="nft?.name; else spinner" class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-10">
+    <img [src]="nft.image_url" class="rounded-lg shadow-lg"/>
+    <div class="flex flex-col gap-4 justify-between">
+        <div class="flex flex-col gap-4">
+            <h1 class="text-4xl subpixel-antialiased text-primary font-extrabold tracking-wide line-clamp-2">{{nft.name}}</h1>
+            <span>{{nft.description}}</span>
+        </div>
+        <button class="text-white bg-primary rounded-full py-2 hover:bg-green-500 tracking-wider font-semibold text-lg" 
+            matRipple
+            [matRippleRadius]="350"
+            [matRippleColor]="'rgba(255,255,255,.1)'">
+            COMPRAR
+        </button>
+        
+    </div>
+
+</div>
+
+<ng-template #spinner>
+    <div class="flex justify-center items-center h-full">
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>
