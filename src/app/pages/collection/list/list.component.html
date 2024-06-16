@@ -24,7 +24,7 @@
                 <img class="h-52" [src]="nft.display_animation_url" (load)="imageLoaded(nft.identifier)"/>
             </div>
             <div class="flex flex-row items-center w-full z-10">
-                <button (click)="comprar(nft)" class="flex-auto py-2 bg-primary text-white hover:bg-green-500 tracking-wider font-semibold text-lg">
+                <button (click)="_openseaService.comprar(nft)" class="flex-auto py-2 bg-primary text-white hover:bg-green-500 tracking-wider font-semibold text-lg">
                     COMPRAR
                 </button>
                 <button mat-button [matMenuTriggerFor]="shareMenu" class="flex justify-center items-center min-h-full min-w-8 bg-yellow-400" matTooltip="Compartilhe">

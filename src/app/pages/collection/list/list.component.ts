@@ -9,7 +9,6 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { identity } from 'rxjs';
 
 @Component({
   selector: 'app-list',
@@ -27,18 +26,14 @@ export default class ListComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
-    private _openSea: OpenseaService,
+    public _openseaService: OpenseaService,
     private _metaMaskService: MetamaskService,
     private _snackBar: MatSnackBar,
-    ) { }
+    ) { 
+  }
 
   ngOnInit(): void {
     this.getNfts();
-  }
-
-  comprar(nft: Nft):void {
-    console.log('Esta conectado?', this._metaMaskService.isConnected());
-    console.log('comprar nft', nft);
   }
 
   goToNftDetail(nft: any): void {
@@ -46,7 +41,7 @@ export default class ListComponent implements OnInit {
   }
 
   getNfts(): void {
-    this._openSea.getNftsByCollection('piratenation',200)
+    this._openseaService.getNftsByCollection('piratenation',200)
     .subscribe({
       next: (res: NftsByCollection) => {
         console.log('res opensea',res);
@@ -54,12 +49,12 @@ export default class ListComponent implements OnInit {
       },
       error: (error) => {
         console.error(error);
-        this._snackBar.open('Ops... Este Zucker está em outro universo 🚀', 'Desmaterializar', {
+        this._snackBar.open('Acho que os Zuckers estão aprontando alguma coisa... 🧐', 'kaboom', {
           horizontalPosition: 'start',
           verticalPosition: 'top',
           panelClass: ['custom-snackbar']
         });
-        this._router.navigate(['/collection/list']);
+        this._router.navigate(['/home']);
       },
       complete: () => {
       }

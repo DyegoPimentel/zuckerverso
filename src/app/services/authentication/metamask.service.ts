@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Subject, from } from 'rxjs';
 import { ethers } from 'ethers';
 import { tick } from '@angular/core/testing';
 
@@ -18,7 +18,7 @@ export class MetamaskService {
   private tokenMetamaskSubject = new BehaviorSubject<string>('');
   public tokenMetamask$ = this.tokenMetamaskSubject.asObservable();
 
-  private textButtonSubject = new BehaviorSubject<string>('Conecte sua Metamask');
+  private textButtonSubject = new BehaviorSubject<string>('');
   public textButton$ = this.textButtonSubject.asObservable();
 
   private provider: ethers.BrowserProvider | undefined;
@@ -26,9 +26,16 @@ export class MetamaskService {
   isRequestingAccounts: boolean = false;
 
   constructor() { 
+    this.setTextButton();
     if (this.isMetaMaskInstalled()) {
       this.provider = new ethers.BrowserProvider(window.ethereum);
       console.log('this.provider service', this.provider);
+      from(this.isConnected())
+      .subscribe({
+      next: (status) => {
+        console.log('esta logado?', status);
+      },
+    });
     } else {
       console.log('Instale a metamask para fazer o login.');
     }
@@ -36,11 +43,20 @@ export class MetamaskService {
     
   }
 
-  setTextButton(token: string | undefined): void {
-    if (!token) return;
-    const prefix = token.substring(0, 4);
-    const suffix = token.substring(token.length - 4);
-    this.textButtonSubject.next(`${prefix}...${suffix}`);
+  setTextButton(token?: string | undefined): void {
+    let text: any = 'Conecte sua Metamask';
+
+    if (localStorage.getItem('zkverso')) {
+      text = localStorage.getItem('zkverso');
+    };
+
+    if (token) {
+      const prefix = token.substring(0, 4);
+      const suffix = token.substring(token.length - 4);
+      text = `${prefix}...${suffix}`;
+      localStorage.setItem('zkverso', text);
+    };
+    this.textButtonSubject.next(text);
   }
 
 
@@ -70,8 +86,7 @@ export class MetamaskService {
     try {
       this.signer = await this.provider.getSigner();
       const token: string = await this.signer.getAddress();
-      console.log('token isConnected', token);
-      this.setTextButton(token);
+      console.log('token isConnected service', token);
       this.tokenMetamaskSubject.next(token);
 
       const address = await this.signer.getAddress();
@@ -79,6 +94,14 @@ export class MetamaskService {
     } catch (error) {
       return false;
     }
+  }
+
+  disconnect() {
+    this.provider?.destroy();
+    this.provider = undefined;
+    this.signer = undefined;
+    if (localStorage.getItem('zkverso')) localStorage.removeItem('zkverso');
+    this.setTextButton();
   }
 
   isMetaMaskInstalled(): boolean {

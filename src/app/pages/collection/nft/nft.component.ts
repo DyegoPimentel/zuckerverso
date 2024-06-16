@@ -11,6 +11,7 @@ import {
 } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
+import { MetamaskService } from '../../../services/authentication/metamask.service';
 
 @Component({
   selector: 'app-nft',
@@ -26,8 +27,9 @@ export default class NftComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute, 
     private _router: Router,
-    private _openseaService: OpenseaService,
+    public _openseaService: OpenseaService,
     private _snackBar: MatSnackBar,
+    private _metaMaskService: MetamaskService,
     
   ) {
     if (this._route.snapshot.paramMap.get('id')) {
@@ -35,6 +37,13 @@ export default class NftComponent implements OnInit {
     } else {
       this._router.navigate(['/collection']);
     }
+
+    // from(this._metaMaskService.isConnected())
+    // .subscribe({
+    //   next: (status) => {
+    //     console.log('esta logado nft?', status);
+    //   }
+    // });
   }
   
   ngOnInit(): void {
