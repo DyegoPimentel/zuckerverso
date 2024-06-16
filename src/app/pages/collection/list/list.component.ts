@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { Nft, NftsByCollection } from '../../../services/opensea/opensea';
 import { MatTooltipModule} from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule, MenuComponent, MatTooltipModule, MatIconModule],
+  imports: [CommonModule, MenuComponent, MatTooltipModule, MatIconModule, MatMenuModule],
   providers: [],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css'

@@ -1,7 +1,7 @@
 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 p-10 gap-8">
     
     @for (nft of nftList?.nfts; track nft) {
-        <div class="relative flex flex-col rounded-lg outline outline-offset-2 outline-2 outline-slate-200 overflow-hidden hover:scale-110 cursor-pointer">
+        <div class="relative flex flex-col rounded-lg outline outline-offset-2 outline-2 outline-slate-200 hover:outline-[#3C095E] overflow-hidden hover:scale-110 cursor-pointer">
             <div class="absolute w-full h-full hover:bg-gradient-to-b hover:from-black/[.4] hover:bg-opacity-50" matTooltip="Clique para ver os detalhes deste NFT">
                 <div class="absolute text-white flex flex-col h-full">
                     <div class="flex flex-row p-2 gap-1 items-center " matTooltip="Favorite este Zuck" [matTooltipPosition]="'right'">
@@ -21,9 +21,17 @@
                 <button (click)="comprar(nft)" class="flex-auto py-2 bg-[#3C095E] text-white hover:bg-green-500 tracking-wider font-semibold text-lg">
                     COMPRAR
                 </button>
-                <div class="flex justify-center items-center min-h-full min-w-8 bg-yellow-400" matTooltip="Compartilhe">
+                <button mat-button [matMenuTriggerFor]="shareMenu" class="flex justify-center items-center min-h-full min-w-8 bg-yellow-400" matTooltip="Compartilhe">
                     <mat-icon class="scale-75">share</mat-icon>
-                </div>
+                </button>
+                <mat-menu #shareMenu="matMenu" yPosition="above">
+                    <ng-template matMenuContent>
+                        <button mat-menu-item>
+                          <mat-icon >content_copy</mat-icon>
+                          <span>Copiar Link</span>
+                        </button>
+                    </ng-template>
+                </mat-menu>
             </div>
         </div>
     }
