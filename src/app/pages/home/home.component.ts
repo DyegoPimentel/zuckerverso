@@ -64,10 +64,6 @@ export default class HomeComponent implements OnInit {
     });
   }
 
-  metamaskButton(): void {
-    this._metamaskService.connectToMetaMask();
-  }
-
   goToList(): void {
     this._router.navigate(['/collection/list']);
   }

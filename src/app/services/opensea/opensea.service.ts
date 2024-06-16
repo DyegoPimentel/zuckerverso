@@ -18,6 +18,11 @@ export class OpenseaService {
 
   constructor(private _metamaskService: MetamaskService) { }
 
+  comprar(nft: Nft):void {
+    console.log('Esta conectado?', this._metamaskService.isConnected());
+    console.log('comprar nft', nft);
+  }
+
   getNft(identifier:string, contract?:string, chain?:string,): Observable<{nft: Nft}> {
     const headers = new HttpHeaders({
       accept: 'application/json',

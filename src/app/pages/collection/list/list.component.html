@@ -32,7 +32,7 @@
                 </button>
                 <mat-menu #shareMenu="matMenu" yPosition="above">
                     <ng-template matMenuContent>
-                        <button mat-menu-item>
+                        <button mat-menu-item (click)="copyUrl(nft.identifier)">
                           <mat-icon >content_copy</mat-icon>
                           <span>Copiar Link</span>
                         </button>
