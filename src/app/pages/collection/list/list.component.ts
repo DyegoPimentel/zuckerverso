@@ -1,20 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MenuComponent } from '../../../components/menu/menu.component';
 import { MetamaskService } from '../../../services/authentication/metamask.service';
 import { OpenseaService } from '../../../services/opensea/opensea.service';
 import { CommonModule } from '@angular/common';
 import { nftsByCollection } from './list';
+import { MatTooltipModule} from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule, MenuComponent],
+  imports: [CommonModule, MenuComponent, MatTooltipModule, MatIconModule],
   providers: [],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css'
 })
 export default class ListComponent implements OnInit {
-
   nftList: nftsByCollection | undefined;
 
   constructor(

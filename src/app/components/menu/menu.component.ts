@@ -4,11 +4,12 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import { MetamaskService } from '../../services/authentication/metamask.service';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'menu',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatDividerModule, MatIconModule],
+  imports: [CommonModule, MatButtonModule, MatDividerModule, MatIconModule, RouterModule],
   providers: [],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
