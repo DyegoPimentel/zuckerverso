@@ -23,6 +23,9 @@ export class OpenseaService {
   comprar(nft: Nft):void {
     console.log('Esta conectado?', this._metamaskService.isConnected());
     console.log('comprar nft', nft);
+
+    const url = `https://opensea.io/assets/${this.chain}/${this.contractCollection}/${nft.identifier}`;
+    window.open(url, '_blank');
   }
 
   getNft(identifier:string, contract?:string, chain?:string,): Observable<{nft: Nft}> {
