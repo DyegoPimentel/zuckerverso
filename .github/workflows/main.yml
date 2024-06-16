@@ -39,7 +39,7 @@ jobs:
 
         with: 
           name: dist
-          path: dist/historias-do-brasil/browser
+          path: dist/zuckerverso/browser
   deploy: 
     name: Deploy
     needs: build
@@ -51,7 +51,7 @@ jobs:
         uses: actions/download-artifact@main
         with:
           name: dist
-          path: dist/historias-do-brasil/browser
+          path: dist/zuckerverso/browser
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:

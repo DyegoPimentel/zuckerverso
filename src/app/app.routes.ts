@@ -15,7 +15,6 @@ export const routes: Routes = [
     {
         path: 'collection/list',
         title: 'Lista de NFT - Histórias do Brasil',
-        canActivate: [authGuard],
         loadComponent: () => import('./pages/collection/list/list.component'),
     },
     {
