@@ -7,11 +7,12 @@ import { Nft, NftsByCollection } from '../../../services/opensea/opensea';
 import { MatTooltipModule} from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule, MenuComponent, MatTooltipModule, MatIconModule, MatMenuModule],
+  imports: [CommonModule, MenuComponent, MatTooltipModule, MatIconModule, MatMenuModule,RouterModule],
   providers: [],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css'
@@ -20,6 +21,7 @@ export default class ListComponent implements OnInit {
   nftList: NftsByCollection | undefined;
 
   constructor(
+    private route: ActivatedRoute,
     private _openSea: OpenseaService,
     private _metaMaskService: MetamaskService
     ) { }

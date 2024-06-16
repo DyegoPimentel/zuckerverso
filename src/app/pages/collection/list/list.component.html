@@ -2,7 +2,7 @@
     
     @for (nft of nftList?.nfts; track nft) {
         <div class="relative flex flex-col rounded-lg outline outline-offset-2 outline-2 outline-slate-200 hover:outline-[#3C095E] overflow-hidden hover:scale-110 cursor-pointer">
-            <div class="absolute w-full h-full hover:bg-gradient-to-b hover:from-black/[.4] hover:bg-opacity-50" matTooltip="Clique para ver os detalhes deste NFT">
+            <div [routerLink]="['/collection/nft',nft.identifier]" class="absolute w-full h-full hover:bg-gradient-to-b hover:from-black/[.4] hover:bg-opacity-50" matTooltip="Clique para ver os detalhes deste NFT">
                 <div class="absolute text-white flex flex-col h-full">
                     <div class="flex flex-row p-2 gap-1 items-center " matTooltip="Favorite este Zuck" [matTooltipPosition]="'right'">
                         <mat-icon [ngClass]="{

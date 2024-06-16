@@ -9,13 +9,18 @@ export const routes: Routes = [
     },
     {
         path: 'home',
-        title: 'Histórias do Brasil',
+        title: 'Bem vindo ao ZuckerVerso',
         loadComponent: () => import('./pages/home/home.component'),
     },
     {
         path: 'collection/list',
-        title: 'Lista de NFT - Histórias do Brasil',
+        title: 'Lista de NFT ',
         loadComponent: () => import('./pages/collection/list/list.component'),
+    },
+    {
+        path: 'collection/nft/:id',
+        title: 'NFT',
+        loadComponent: () => import('./pages/collection/nft/nft.component')
     },
     {
         path: '**',
