@@ -59,7 +59,7 @@ export default class ListComponent implements OnInit {
   }
 
   getNfts(): void {
-    this._openseaService.getNftsByCollection('piratenation',200)
+    this._openseaService.getNftsByCollection(200)
     .subscribe({
       next: (res: NftsByCollection) => {
         console.log('res opensea',res);

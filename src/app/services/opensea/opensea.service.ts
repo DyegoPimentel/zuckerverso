@@ -14,7 +14,9 @@ export class OpenseaService {
   private url: string = 'https://api.opensea.io/api/v2';
   private API_KEY: string = environment.OPENSEA_API_KEY;
 
-  private contractCollection = '0x1b41d54b3f8de13d58102c50d7431fd6aa1a2c48';
+  private contractCollection: string = '0xaf06d4881332ba87f19a5f352fb9970567b0126f';
+  private collection_slug: string = 'runestone4poor';
+  private chain: string = 'matic';
 
   constructor(private _metamaskService: MetamaskService) { }
 
@@ -29,17 +31,17 @@ export class OpenseaService {
       'x-api-key': this.API_KEY
     });
 
-    return this.httpClient.get<{nft: Nft}>(this.url+'/chain/'+(chain || 'ethereum')+'/contract/'+(contract || this.contractCollection)+'/nfts/'+identifier, {headers});
+    return this.httpClient.get<{nft: Nft}>(this.url+'/chain/'+(chain || this.chain)+'/contract/'+(contract || this.contractCollection)+'/nfts/'+identifier, {headers});
   }
 
-  getCollection(collection_slug: string): Observable<any> {
+  getCollection(): Observable<any> {
     const requestOptions = {                                                                                                                                                                                 
       headers: new HttpHeaders({'x-api-key':this.API_KEY}), 
     };
-    return this.httpClient.get<any>(this.url+'/collections/'+collection_slug, requestOptions);
+    return this.httpClient.get<any>(this.url+'/collections/'+this.collection_slug, requestOptions);
   }
 
-  getNftsByCollection(collection_slug: string, limit?: number, next?: string): Observable<NftsByCollection> {
+  getNftsByCollection(limit?: number, next?: string): Observable<NftsByCollection> {
     const headers = new HttpHeaders({
       accept: 'application/json',
       'x-api-key': this.API_KEY
@@ -51,6 +53,6 @@ export class OpenseaService {
     // The cursor for the next page of results. This is returned from a previous request.
     if (next) params = params.append('next', next);
     
-    return this.httpClient.get<NftsByCollection>(this.url+'/collection/'+collection_slug+'/nfts', {headers, params});
+    return this.httpClient.get<NftsByCollection>(this.url+'/collection/'+this.collection_slug+'/nfts', {headers, params});
   }
 }

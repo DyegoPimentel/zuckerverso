@@ -26,8 +26,7 @@
           </mat-icon>
           <span class="text-primary">{{textButton}}</span> 
       </button>
-  
-      <button class="bg-white hover:bg-slate-100 p-2 rounded-full w-10 h-10 flex justify-center items-center" [matMenuTriggerFor]="menu">
+      <button *ngIf="(textButton.length === 11)" class="bg-white hover:bg-slate-100 p-2 rounded-full w-10 h-10 flex justify-center items-center" [matMenuTriggerFor]="menu">
         <mat-icon class="text-primary">apps</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
