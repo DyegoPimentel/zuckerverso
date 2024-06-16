@@ -3,9 +3,12 @@
     @for (nft of nftList?.nfts; track nft) {
         <div class="relative flex flex-col rounded-lg outline outline-offset-2 outline-2 outline-slate-200 overflow-hidden hover:scale-110 cursor-pointer">
             <div class="absolute w-full h-full hover:bg-gradient-to-b hover:from-black/[.4] hover:bg-opacity-50" matTooltip="Clique para ver os detalhes deste NFT">
-                <div class="absolute text-white flex flex-col  w-full h-full">
-                    <div class="flex flex-row p-2 gap-1 items-center ">
-                        <mat-icon class=" text-yellow-400 drop-shadow-sm">star</mat-icon>
+                <div class="absolute text-white flex flex-col h-full">
+                    <div class="flex flex-row p-2 gap-1 items-center " matTooltip="Favorite este Zuck" [matTooltipPosition]="'right'">
+                        <mat-icon [ngClass]="{
+                            'text-yellow-400': false,
+                            'text-white drop-shadow-sm': true
+                            }">star</mat-icon>
                         <span class="drop-shadow-sm">#{{nft.identifier}}</span>
                     </div>
                 </div>
@@ -15,7 +18,7 @@
                 <img [src]="nft.display_animation_url"/>
             </div>
             <div class="flex flex-row items-center w-full z-10">
-                <button class="flex-auto py-2 bg-[#3C095E] text-white hover:bg-green-500 tracking-wider font-semibold text-lg">
+                <button (click)="comprar(nft)" class="flex-auto py-2 bg-[#3C095E] text-white hover:bg-green-500 tracking-wider font-semibold text-lg">
                     COMPRAR
                 </button>
                 <div class="flex justify-center items-center min-h-full min-w-8 bg-yellow-400" matTooltip="Compartilhe">

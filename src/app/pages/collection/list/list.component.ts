@@ -3,7 +3,7 @@ import { MenuComponent } from '../../../components/menu/menu.component';
 import { MetamaskService } from '../../../services/authentication/metamask.service';
 import { OpenseaService } from '../../../services/opensea/opensea.service';
 import { CommonModule } from '@angular/common';
-import { nftsByCollection } from './list';
+import { Nft, NftsByCollection } from '../../../services/opensea/opensea';
 import { MatTooltipModule} from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -16,7 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './list.component.css'
 })
 export default class ListComponent implements OnInit {
-  nftList: nftsByCollection | undefined;
+  nftList: NftsByCollection | undefined;
 
   constructor(
     private _openSea: OpenseaService,
@@ -27,9 +27,14 @@ export default class ListComponent implements OnInit {
     this.getNfts();
   }
 
+  comprar(nft: Nft):void {
+    console.log('Esta conectado?', this._metaMaskService.isConnected());
+    console.log('comprar nft', nft);
+  }
+
   getNfts(): void {
     this._openSea.getNftsByCollection('piratenation')
-    .subscribe((res: nftsByCollection) => {
+    .subscribe((res: NftsByCollection) => {
       console.log('res opensea',res);
       this.nftList = res;
     })

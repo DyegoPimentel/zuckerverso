@@ -1,9 +1,9 @@
-export interface nftsByCollection {
+export interface NftsByCollection {
     next: string,
-    nfts: nft[]
+    nfts: Nft[]
 }
 
-export interface nft {
+export interface Nft {
     identifier: string, // "8840",
     collection: string, // "piratenation",
     contract: string, // "0x1b41d54b3f8de13d58102c50d7431fd6aa1a2c48",
