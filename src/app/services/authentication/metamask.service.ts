@@ -28,14 +28,14 @@ export class MetamaskService {
   constructor() { 
     this.setTextButton();
     if (this.isMetaMaskInstalled()) {
-      this.provider = new ethers.BrowserProvider(window.ethereum);
+      console.log('we',window.ethereum);
       console.log('this.provider service', this.provider);
       from(this.isConnected())
       .subscribe({
-      next: (status) => {
-        console.log('esta logado?', status);
-      },
-    });
+        next: (status) => {
+          console.log('esta logado?', status);
+        },
+      });
     } else {
       console.log('Instale a metamask para fazer o login.');
     }
@@ -60,13 +60,17 @@ export class MetamaskService {
   }
 
 
-  async connectToMetaMask(): Promise<void> {
+  async connectToMetaMask(): Promise<any> {
+    this.provider = new ethers.BrowserProvider(window.ethereum);
     if (this.provider) {
       try {
         await this.provider.send('eth_requestAccounts', []);
         this.signer = await this.provider.getSigner();
         this.setTextButton(await this.signer.getAddress());
         console.log('Conectado com a conta: ', this.signer.getAddress());
+        const provider = this.provider;
+        const signer = this.signer;
+        return { provider, signer};
       } catch (error: any) {
         if (error.code === 4001) { // Usuário rejeitou a solicitação
           console.error('O usuário rejeitou a solicitação de conexão com MetaMask');
