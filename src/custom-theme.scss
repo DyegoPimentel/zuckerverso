@@ -10,7 +10,7 @@
 @include mat.core();
 
 // Define the theme object.
-$historias-do-brasil-theme: mat.define-theme((
+$zuckerverso-theme: mat.define-theme((
   color: (
     theme-type: light,
     primary: mat.$azure-palette,
@@ -25,12 +25,12 @@ $historias-do-brasil-theme: mat.define-theme((
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 :root {
-  @include mat.all-component-themes($historias-do-brasil-theme);
+  @include mat.all-component-themes($zuckerverso-theme);
 }
 
 // Comment out the line below if you want to use the pre-defined typography utility classes.
 // For more information: https://material.angular.io/guide/typography#using-typography-styles-in-your-application.
-// @include mat.typography-hierarchy($historias-do-brasil-theme);
+// @include mat.typography-hierarchy($zuckerverso-theme);
 
 // Comment out the line below if you want to use the deprecated `color` inputs.
-// @include mat.color-variants-backwards-compatibility($historias-do-brasil-theme);
+// @include mat.color-variants-backwards-compatibility($zuckerverso-theme);
