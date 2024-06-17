@@ -14,8 +14,8 @@ export class OpenseaService {
   private url: string = 'https://api.opensea.io/api/v2';
   private API_KEY: string = environment.OPENSEA_API_KEY;
 
-  private contractCollection: string = '0xaf06d4881332ba87f19a5f352fb9970567b0126f';
-  private collection_slug: string = 'runestone4poor';
+  private contractCollection: string = '0x2872018ed4e1533998fbaecad64fd5200ab12804';
+  private collection_slug: string = 'zuckerverso';
   private chain: string = 'matic';
 
   constructor(private _metamaskService: MetamaskService) { }

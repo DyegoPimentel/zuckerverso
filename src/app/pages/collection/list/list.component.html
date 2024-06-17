@@ -21,7 +21,7 @@
             </div>
 
             <div>
-                <img class="h-52" [src]="nft.display_animation_url" (load)="imageLoaded(nft.identifier)"/>
+                <img class="h-52" [src]="nft.display_image_url" (load)="imageLoaded(nft.identifier)"/>
             </div>
             <div class="flex flex-row items-center w-full z-10">
                 <button (click)="_openseaService.comprar(nft)" class="flex-auto py-2 bg-primary text-white hover:bg-green-500 tracking-wider font-semibold text-lg">
