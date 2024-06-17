@@ -12,7 +12,7 @@ import { from } from 'rxjs';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, MatButtonModule, MatDividerModule, MatIconModule,],
+  imports: [CommonModule, HttpClientModule, MatButtonModule, MatDividerModule, MatIconModule],
   providers: [ FirebaseService],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
