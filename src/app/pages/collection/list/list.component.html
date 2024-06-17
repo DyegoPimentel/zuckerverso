@@ -4,42 +4,45 @@
         <div *ngIf="!isVisible(nft.identifier)">
             <ng-container *ngTemplateOutlet="loadingCard"></ng-container>
         </div>
-        <div [ngClass]="{
-            'hidden': !isVisible(nft.identifier),
-            'relative flex flex-col rounded-lg outline outline-offset-2 outline-2 outline-slate-200 hover:outline-primary overflow-hidden hover:scale-110 cursor-pointer': true
-        }">
-            <div (click)="goToNftDetail(nft)" class="absolute w-full h-full hover:bg-gradient-to-b hover:from-black/[.4] hover:bg-opacity-50" matTooltip="Clique para ver os detalhes deste NFT">
-                <div class="absolute text-white flex flex-col h-full">
-                    <div class="flex flex-row p-2 gap-1 items-center " matTooltip="Favorite este Zuck" [matTooltipPosition]="'right'">
-                        <mat-icon [ngClass]="{
-                            'text-yellow-400': false,
-                            'text-white drop-shadow-sm': true
-                            }">star</mat-icon>
-                        <span class="drop-shadow-sm">#{{nft.identifier}}</span>
-                    </div>
-                </div>
-            </div>
+ <div [ngClass]="{
+  'hidden': !isVisible(nft.identifier),
+  'relative flex flex-col rounded-lg outline outline-offset-2 outline-2 outline-slate-200 hover:outline-primary overflow-hidden hover:scale-110 cursor-pointer': true
+}">
+  <div class="absolute text-white flex flex-col z-30">
+    <div class="flex flex-row p-2 gap-1 items-center" matTooltip="Favorite este Zuck" [matTooltipPosition]="'right'" (click)="setFavorite(nft)">
+      <mat-icon [ngClass]="{
+        'text-yellow-400': false,
+        'text-white drop-shadow-sm': true
+      }">star</mat-icon>
+      <span class="drop-shadow-sm">#{{nft.identifier}}</span>
+    </div>
+  </div>
 
-            <div>
-                <img class="h-52" [src]="nft.display_image_url" (load)="imageLoaded(nft.identifier)"/>
-            </div>
-            <div class="flex flex-row items-center w-full z-10">
-                <button (click)="_openseaService.comprar(nft)" class="flex-auto py-2 bg-primary text-white hover:bg-green-500 tracking-wider font-semibold text-lg">
-                    COMPRAR
-                </button>
-                <button mat-button [matMenuTriggerFor]="shareMenu" class="flex justify-center items-center min-h-full min-w-8 bg-yellow-400" matTooltip="Compartilhe">
-                    <mat-icon class="scale-75">share</mat-icon>
-                </button>
-                <mat-menu #shareMenu="matMenu" yPosition="above">
-                    <ng-template matMenuContent>
-                        <button mat-menu-item (click)="copyUrl(nft.identifier)">
-                          <mat-icon >content_copy</mat-icon>
-                          <span>Copiar Link</span>
-                        </button>
-                    </ng-template>
-                </mat-menu>
-            </div>
-        </div>
+  <div (click)="goToNftDetail(nft)" class="absolute w-full h-full hover:bg-gradient-to-b hover:from-black/[.4] hover:bg-opacity-50" matTooltip="Clique para ver os detalhes deste NFT">
+  </div>
+
+  <div>
+    <img [src]="nft.display_image_url" class="object-cover" (load)="imageLoaded(nft.identifier)" />
+  </div>
+
+  <div class="flex flex-row items-center w-full z-10">
+    <button (click)="_openseaService.comprar(nft)" class="flex-auto py-2 bg-primary text-white hover:bg-green-500 tracking-wider font-semibold text-lg">
+      COMPRAR
+    </button>
+    <button mat-button [matMenuTriggerFor]="shareMenu" class="flex justify-center items-center min-h-full min-w-8 bg-yellow-400" matTooltip="Compartilhe">
+      <mat-icon class="scale-75">share</mat-icon>
+    </button>
+    <mat-menu #shareMenu="matMenu" yPosition="above">
+      <ng-template matMenuContent>
+        <button mat-menu-item (click)="copyUrl(nft.identifier)">
+          <mat-icon>content_copy</mat-icon>
+          <span>Copiar Link</span>
+        </button>
+      </ng-template>
+    </mat-menu>
+  </div>
+</div>
+
     }
 
 </div>

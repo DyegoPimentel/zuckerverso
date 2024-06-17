@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject, from } from 'rxjs';
+import { BehaviorSubject, Subject, from, of } from 'rxjs';
 import { ethers } from 'ethers';
 import { tick } from '@angular/core/testing';
+import { FirebaseService } from './firebase.service';
 
 
 declare global {
@@ -25,15 +26,22 @@ export class MetamaskService {
   private signer: ethers.Signer | undefined;
   isRequestingAccounts: boolean = false;
 
-  constructor() { 
-    this.setTextButton();
+  items: any;
+  constructor(private _firebaseService: FirebaseService) { 
+    this.provider = new ethers.BrowserProvider(window.ethereum);
+
     if (this.isMetaMaskInstalled()) {
-      console.log('we',window.ethereum);
-      console.log('this.provider service', this.provider);
       from(this.isConnected())
       .subscribe({
-        next: (status) => {
-          console.log('esta logado?', status);
+        next: (logged) => {
+          console.log('esta logado?', logged);
+          if (logged) {
+            this.setUser()
+          } else {
+            localStorage.removeItem('zkverso');
+          } 
+
+          this.setTextButton();
         },
       });
     } else {
@@ -43,12 +51,9 @@ export class MetamaskService {
     
   }
 
-  setTextButton(token?: string | undefined): void {
+  setTextButton(): void {
     let text: any = 'Conecte sua Metamask';
-
-    if (localStorage.getItem('zkverso')) {
-      text = localStorage.getItem('zkverso');
-    };
+    const token: string = this.token;
 
     if (token) {
       const prefix = token.substring(0, 4);
@@ -56,18 +61,38 @@ export class MetamaskService {
       text = `${prefix}...${suffix}`;
       localStorage.setItem('zkverso', text);
     };
+
+    if (localStorage.getItem('zkverso')) {
+      text = localStorage.getItem('zkverso');
+    };
+
     this.textButtonSubject.next(text);
   }
 
+  setUser(): void {
+    console.log('setUser', this.token);
+    // this._firebaseService.getUserById(tokenMetamask: string): Observable<any> {
+    //   return this.firestore.collection('users').doc(tokenMetamask).valueChanges();
+    // }
+  }
+
+  get token(): string {
+    let token: string = '';
+    this.tokenMetamask$.subscribe({
+      next: (tkn) => {
+        token = tkn;
+      }
+    });
+    return token;
+  }
 
   async connectToMetaMask(): Promise<any> {
-    this.provider = new ethers.BrowserProvider(window.ethereum);
     if (this.provider) {
       try {
         await this.provider.send('eth_requestAccounts', []);
         this.signer = await this.provider.getSigner();
-        this.setTextButton(await this.signer.getAddress());
-        console.log('Conectado com a conta: ', this.signer.getAddress());
+        this.tokenMetamaskSubject.next(await this.signer.getAddress());
+        this.setTextButton();
         const provider = this.provider;
         const signer = this.signer;
         return { provider, signer};
@@ -96,6 +121,7 @@ export class MetamaskService {
       const address = await this.signer.getAddress();
       return !!address;
     } catch (error) {
+      console.log('isconnec error', error);
       return false;
     }
   }

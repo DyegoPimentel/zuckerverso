@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MenuComponent } from '../../../components/menu/menu.component';
 import { MetamaskService } from '../../../services/authentication/metamask.service';
 import { OpenseaService } from '../../../services/opensea/opensea.service';
 import { CommonModule } from '@angular/common';
@@ -10,11 +9,13 @@ import {MatMenuModule} from '@angular/material/menu';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Clipboard, ClipboardModule } from '@angular/cdk/clipboard';
+import { FirebaseService } from '../../../services/authentication/firebase.service';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule, MenuComponent, MatTooltipModule, MatIconModule, MatMenuModule,RouterModule,ClipboardModule],
+  imports: [CommonModule, MatTooltipModule, MatIconModule, MatMenuModule,RouterModule,ClipboardModule],
   providers: [],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css'
@@ -24,14 +25,27 @@ export default class ListComponent implements OnInit {
   mockCardArray: number[] = Array(32).fill(0).map((x, i) => i);
   cardsLoaded: string[] = [];
 
+  private dbPath = '/users'
+  usersRef: AngularFireList<any> | undefined;
+
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
     public _openseaService: OpenseaService,
     private _metaMaskService: MetamaskService,
+    private _fire: FirebaseService,
     private _snackBar: MatSnackBar,
-    private clipboard: Clipboard
+    private clipboard: Clipboard,
+    private db: AngularFireDatabase
     ) { 
+      this.usersRef = db.list(this.dbPath);
+      
+      console.log('users', this.getUsers());
+      
+  }
+
+  getUsers() {
+    return this.usersRef;
   }
 
   ngOnInit(): void {
@@ -52,6 +66,10 @@ export default class ListComponent implements OnInit {
       panelClass: ['custom-snackbar']
     });
     
+  }
+
+  setFavorite(nft: Nft): void {
+    console.log('favorita nft ', nft.identifier);
   }
 
   goToNftDetail(nft: any): void {
