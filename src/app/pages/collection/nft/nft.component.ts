@@ -4,11 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Nft } from '../../../services/opensea/opensea';
 import { OpenseaService } from '../../../services/opensea/opensea.service';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { MetamaskService } from '../../../services/authentication/metamask.service';

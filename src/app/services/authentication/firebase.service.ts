@@ -1,14 +1,9 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore'; 
-import { environment } from '../../../environments/environment';
 import { BehaviorSubject, Observable, from } from 'rxjs';
-import { Firestore, collection } from 'firebase/firestore';
-import { collectionData } from '@angular/fire/firestore';
-import { AngularFireList } from '@angular/fire/compat/database';
-import { MetamaskService } from './metamask.service';
+
 
 @Injectable({
   providedIn: 'root'

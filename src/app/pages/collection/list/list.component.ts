@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MetamaskService } from '../../../services/authentication/metamask.service';
 import { OpenseaService } from '../../../services/opensea/opensea.service';
 import { CommonModule } from '@angular/common';
