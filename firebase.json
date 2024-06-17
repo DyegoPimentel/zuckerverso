@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/historias-do-brasil/browser",
+    "public": "dist/zuckerverso/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
