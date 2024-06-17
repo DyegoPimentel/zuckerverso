@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
-import { UnsplashService } from '../../services/unsplash/unsplash.service';
 import {  HttpClientModule } from '@angular/common/http';
 import { MetamaskService } from '../../services/authentication/metamask.service';
 import { FirebaseService } from '../../services/authentication/firebase.service';
@@ -14,7 +13,7 @@ import { from } from 'rxjs';
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule, HttpClientModule, MatButtonModule, MatDividerModule, MatIconModule,],
-  providers: [UnsplashService, FirebaseService],
+  providers: [ FirebaseService],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
