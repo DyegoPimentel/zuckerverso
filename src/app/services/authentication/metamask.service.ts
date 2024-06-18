@@ -31,8 +31,11 @@ export class MetamaskService {
     if (this.isMetaMaskInstalled()) {
       if (window.ethereum.isConnected()) {
         this.provider.getSigner().then(res => {
-          this.tokenMetamaskSubject.next(res?.address)
-          if (this.token) this.setUser();
+          if (localStorage.getItem('zkverso')) {
+            console.log('res addres', res.address);
+            this.tokenMetamaskSubject.next(res?.address)
+            if (this.token) this.setUser();
+          }
         });
       } else {
         localStorage.removeItem('zkverso');
