@@ -25,7 +25,7 @@ export default class ListComponent implements OnInit {
   mockCardArray: number[] = Array(32).fill(0).map((x, i) => i);
   cardsLoaded: string[] = [];
   user: User = {} as User;
-  token: string = '';
+  token: string | undefined = '';
   
   constructor(
     private _route: ActivatedRoute,
@@ -67,7 +67,7 @@ export default class ListComponent implements OnInit {
     } else {
       this.user.favorites.push(nft.identifier);
     }
-    if (this.user) this._firebaseService.updateUser(this.token, this.user);
+    if (this.user && this.token) this._firebaseService.updateUser(this.token, this.user);
   }
 
   goToNftDetail(nft: any): void {

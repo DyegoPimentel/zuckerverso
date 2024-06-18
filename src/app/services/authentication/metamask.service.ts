@@ -16,7 +16,7 @@ declare global {
 })
 export class MetamaskService {
 
-  private tokenMetamaskSubject = new BehaviorSubject<string>('');
+  private tokenMetamaskSubject = new BehaviorSubject<string | undefined>('');
   public tokenMetamask$ = this.tokenMetamaskSubject.asObservable();
 
   private textButtonSubject = new BehaviorSubject<string>('Conecte sua Metamask');
@@ -80,7 +80,7 @@ export class MetamaskService {
   }
 
   get token(): string {
-    let token: string = '';
+    let token: string | undefined = '';
     this.tokenMetamask$.subscribe({
       next: (tkn) => {
         token = tkn;
@@ -118,6 +118,7 @@ export class MetamaskService {
     this.provider?.destroy();
     this.provider = undefined;
     this.signer = undefined;
+    this.tokenMetamaskSubject.next(undefined);
     if (localStorage.getItem('zkverso')) localStorage.removeItem('zkverso');
     this.setTextButton();
   }
