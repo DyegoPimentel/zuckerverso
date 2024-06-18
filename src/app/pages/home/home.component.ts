@@ -7,7 +7,7 @@ import {  HttpClientModule } from '@angular/common/http';
 import { MetamaskService } from '../../services/authentication/metamask.service';
 import { FirebaseService } from '../../services/authentication/firebase.service';
 import { Router } from '@angular/router';
-import { from } from 'rxjs';
+
 
 @Component({
   selector: 'app-home',
@@ -32,36 +32,9 @@ export default class HomeComponent implements OnInit {
         },
         error: (e) => {console.log('error',e);}
       });
-
-      this.isConnected();
   }
 
-  ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-
-    // this._unsplashService.getRandomPhotos('natureza')
-    // .subscribe({
-    //   next: (images) => {
-    //     console.log('res', images);
-    //     this.bgImages = images;
-    //   },
-    //   error: (e) => {
-    //     console.log('error', e);
-    //   }
-    // })
-
-    console.log('home');
-  }
-    
-  private isConnected(): void {
-    from(this._metamaskService.isConnected())
-    .subscribe({
-      next: (status) => {
-        this.isLoggedIn = status;
-      },
-    });
-  }
+  ngOnInit(): void { }
 
   goToList(): void {
     this._router.navigate(['/collection/list']);
