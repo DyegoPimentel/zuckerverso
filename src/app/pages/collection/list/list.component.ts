@@ -9,7 +9,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Clipboard, ClipboardModule } from '@angular/cdk/clipboard';
-import { FirebaseService } from '../../../services/authentication/firebase.service';
+import { FirebaseService, User } from '../../../services/authentication/firebase.service';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 
 @Component({
@@ -24,28 +24,21 @@ export default class ListComponent implements OnInit {
   nftList: NftsByCollection | undefined;
   mockCardArray: number[] = Array(32).fill(0).map((x, i) => i);
   cardsLoaded: string[] = [];
-
-  private dbPath = '/users'
-  usersRef: AngularFireList<any> | undefined;
-
+  user: User = {} as User;
+  token: string = '';
+  
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
     public _openseaService: OpenseaService,
     private _metaMaskService: MetamaskService,
-    private _fire: FirebaseService,
+    private _firebaseService: FirebaseService,
     private _snackBar: MatSnackBar,
     private clipboard: Clipboard,
     private db: AngularFireDatabase
     ) { 
-      this.usersRef = db.list(this.dbPath);
-      
-      console.log('users', this.getUsers());
-      
-  }
-
-  getUsers() {
-    return this.usersRef;
+      this._firebaseService.user$.subscribe(user => this.user = user);
+      this._metaMaskService.tokenMetamask$.subscribe(token => this.token = token);
   }
 
   ngOnInit(): void {
@@ -55,7 +48,6 @@ export default class ListComponent implements OnInit {
   copyUrl(nftId: string): void {
     const protocol = window.location.protocol;
     const host = window.location.host;
-    const path = this._router.url; 
 
     this.clipboard.copy(`${protocol}//${host}/collection/nft/${nftId}`);
 
@@ -69,7 +61,13 @@ export default class ListComponent implements OnInit {
   }
 
   setFavorite(nft: Nft): void {
-    console.log('favorita nft ', nft.identifier);
+    const isFavorite: boolean = this.user.favorites.some(fav => fav === nft.identifier);
+    if (isFavorite) {
+      this.user.favorites = this.user.favorites.filter(res => res !== nft.identifier);
+    } else {
+      this.user.favorites.push(nft.identifier);
+    }
+    if (this.user) this._firebaseService.updateUser(this.token, this.user);
   }
 
   goToNftDetail(nft: any): void {
@@ -80,7 +78,6 @@ export default class ListComponent implements OnInit {
     this._openseaService.getNftsByCollection(200)
     .subscribe({
       next: (res: NftsByCollection) => {
-        console.log('res opensea',res);
         this.nftList = res;
       },
       error: (error) => {
@@ -96,6 +93,16 @@ export default class ListComponent implements OnInit {
       }
 
     })
+  }
+
+  displayFavorite(id: string): boolean {
+    return this.user?.favorites?.some((el:string) => el === id);
+  }
+
+  favoriteTooltip(id: string) {
+    if (this.displayFavorite(id)) return 'Este Zucker é um dos seus favoritos'
+    if (localStorage.getItem('zkverso')) return 'Favorite este Zucker' ;
+    return 'Conecte-se para favoritar este Zucker';
   }
 
   isVisible(identify: string): boolean {

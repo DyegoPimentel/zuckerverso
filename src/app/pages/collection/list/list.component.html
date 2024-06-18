@@ -8,10 +8,10 @@
   'hidden': !isVisible(nft.identifier),
   'relative flex flex-col rounded-lg outline outline-offset-2 outline-2 outline-slate-200 hover:outline-primary overflow-hidden hover:scale-110 cursor-pointer': true
 }">
-  <div class="absolute text-white flex flex-col z-30">
-    <div class="flex flex-row p-2 gap-1 items-center" matTooltip="Favorite este Zuck" [matTooltipPosition]="'right'" (click)="setFavorite(nft)">
+  <div class="absolute text-white flex flex-col z-30" (click)="setFavorite(nft)">
+    <div class="flex flex-row p-2 gap-1 items-center" [matTooltip]="favoriteTooltip(nft.identifier)" [matTooltipPosition]="'right'" >
       <mat-icon [ngClass]="{
-        'text-yellow-400': false,
+        'text-yellow-400': displayFavorite(nft.identifier),
         'text-white drop-shadow-sm': true
       }">star</mat-icon>
       <span class="drop-shadow-sm">#{{nft.identifier}}</span>
