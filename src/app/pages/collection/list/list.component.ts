@@ -24,8 +24,8 @@ export default class ListComponent implements OnInit {
   nftList: NftsByCollection | undefined;
   mockCardArray: number[] = Array(32).fill(0).map((x, i) => i);
   cardsLoaded: string[] = [];
-  user: User = {} as User;
-  token: string | undefined = '';
+  user: User | undefined;
+  token: string | undefined = undefined;
   
   constructor(
     private _route: ActivatedRoute,
@@ -61,13 +61,18 @@ export default class ListComponent implements OnInit {
   }
 
   setFavorite(nft: Nft): void {
+    if (!this.user || !this.token) return;
+
+    console.log('user', this.user);
+    console.log('token', this.token);
     const isFavorite: boolean = this.user.favorites.some(fav => fav === nft.identifier);
     if (isFavorite) {
       this.user.favorites = this.user.favorites.filter(res => res !== nft.identifier);
     } else {
       this.user.favorites.push(nft.identifier);
     }
-    if (this.user && this.token) this._firebaseService.updateUser(this.token, this.user);
+  
+    this._firebaseService.updateUser(this.token, this.user);
   }
 
   goToNftDetail(nft: any): void {
@@ -96,6 +101,7 @@ export default class ListComponent implements OnInit {
   }
 
   displayFavorite(id: string): boolean {
+    if (!this.user) return false;
     return this.user?.favorites?.some((el:string) => el === id);
   }
 
