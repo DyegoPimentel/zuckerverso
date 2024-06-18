@@ -21,7 +21,7 @@ export class OpenseaService {
   constructor(private _metamaskService: MetamaskService) { }
 
   comprar(nft: Nft):void {
-    console.log('Esta conectado?', this._metamaskService.isConnected());
+    console.log('Esta conectado?', window.ethereum.isConnected());
     console.log('comprar nft', nft);
 
     const url = `https://opensea.io/assets/${this.chain}/${this.contractCollection}/${nft.identifier}`;
