@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { from } from 'rxjs';
 import { MetamaskService } from './services/authentication/metamask.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { CommonModule } from '@angular/common';
@@ -24,19 +23,10 @@ export class AppComponent {
   constructor(
     private _metamaskService: MetamaskService,
   ) {
-    console.log('appComponente constructor');
     this._metamaskService.textButton$.subscribe({
       next : (texto: string) => { this.textButton = texto },
       error: (e) => {console.log('error',e);}
     });
-
-    from(this._metamaskService.isConnected())
-    .subscribe({
-      next: (status) => {
-        this.isConnected = status;
-      }
-    });
-
   }
 
   logoutMetamask(): void {
