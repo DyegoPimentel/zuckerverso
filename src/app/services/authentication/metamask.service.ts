@@ -19,35 +19,29 @@ export class MetamaskService {
   private tokenMetamaskSubject = new BehaviorSubject<string>('');
   public tokenMetamask$ = this.tokenMetamaskSubject.asObservable();
 
-  private textButtonSubject = new BehaviorSubject<string>('');
+  private textButtonSubject = new BehaviorSubject<string>('Conecte sua Metamask');
   public textButton$ = this.textButtonSubject.asObservable();
 
   private provider: ethers.BrowserProvider | undefined;
   private signer: ethers.Signer | undefined;
-  isRequestingAccounts: boolean = false;
 
-  items: any;
   constructor(private _firebaseService: FirebaseService) { 
     this.provider = new ethers.BrowserProvider(window.ethereum);
 
     if (this.isMetaMaskInstalled()) {
-      from(this.isConnected())
-      .subscribe({
-        next: (logged) => {
-          console.log('esta logado?', logged);
-          if (logged) {
-            this.setUser()
-          } else {
-            localStorage.removeItem('zkverso');
-          } 
+      if (window.ethereum.isConnected()) {
+        this.provider.getSigner().then(res => {
+          this.tokenMetamaskSubject.next(res?.address)
+          if (this.token) this.setUser();
+        });
+      } else {
+        localStorage.removeItem('zkverso');
+      } 
+      this.setTextButton();
 
-          this.setTextButton();
-        },
-      });
     } else {
       console.log('Instale a metamask para fazer o login.');
     }
-    
     
   }
 
@@ -70,10 +64,19 @@ export class MetamaskService {
   }
 
   setUser(): void {
-    console.log('setUser', this.token);
-    // this._firebaseService.getUserById(tokenMetamask: string): Observable<any> {
-    //   return this.firestore.collection('users').doc(tokenMetamask).valueChanges();
-    // }
+    this._firebaseService.getUserById(this.token)
+    .subscribe({
+      next: (user) => {
+        if (!user) {
+          user = {favorites: []};
+          this._firebaseService.addUser(this.token, user);
+        }
+        this._firebaseService.setUserLocal(user);
+      },
+      error: (error) => {
+        console.log('setUser error', error);
+      }
+    })
   }
 
   get token(): string {
@@ -92,6 +95,8 @@ export class MetamaskService {
         await this.provider.send('eth_requestAccounts', []);
         this.signer = await this.provider.getSigner();
         this.tokenMetamaskSubject.next(await this.signer.getAddress());
+      
+        if (this.token) this.setUser();
         this.setTextButton();
         const provider = this.provider;
         const signer = this.signer;
@@ -106,23 +111,6 @@ export class MetamaskService {
           console.error('Erro ao conectar, verifique sua MetaMask');
         }
       }
-    }
-  }
-
-  async isConnected(): Promise<boolean> {
-    if (!this.provider) return false;
-
-    try {
-      this.signer = await this.provider.getSigner();
-      const token: string = await this.signer.getAddress();
-      console.log('token isConnected service', token);
-      this.tokenMetamaskSubject.next(token);
-
-      const address = await this.signer.getAddress();
-      return !!address;
-    } catch (error) {
-      console.log('isconnec error', error);
-      return false;
     }
   }
 
