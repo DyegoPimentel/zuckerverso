@@ -21,11 +21,18 @@ export class OpenseaService {
   constructor(private _metamaskService: MetamaskService) { }
 
   comprar(nft: Nft):void {
-    console.log('Esta conectado?', window.ethereum.isConnected());
-    console.log('comprar nft', nft);
-
     const url = `https://opensea.io/assets/${this.chain}/${this.contractCollection}/${nft.identifier}`;
     window.open(url, '_blank');
+  }
+
+  sendPurchaseRequest(chain: string, protocol: string, data: any): Observable<any> {
+    const url = `${this.url}/orders/${this.chain}/${protocol}/offers`;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.API_KEY
+    });
+
+    return this.httpClient.post(url, data, { headers: headers });
   }
 
   getNft(identifier:string, contract?:string, chain?:string,): Observable<{nft: Nft}> {
