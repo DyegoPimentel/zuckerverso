@@ -24,15 +24,11 @@ jobs:
           echo "export const environment = {" > src/environments/environment.ts
           echo "  production: false," >> src/environments/environment.ts
           echo "  OPENSEA_API_KEY: '${{ secrets.OPENSEA_API_KEY }}'," >> src/environments/environment.ts
-          echo "  firebase: '${{ secrets.FIREBASE_CONFIG }}'," >> src/environments/environment.ts
+          echo "  firebase: {'${{ secrets.FIREBASE_CONFIG }}'}," >> src/environments/environment.ts
           echo "};" >> src/environments/environment.ts
 
       - name: Build dependencies
         run: npm run build
-        env:
-          NODE_ENV: production
-          OPENSEA_API_KEY: ${{ secrets.OPENSEA_API_KEY }}
-          FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
 
       - name: Archive production artifact
         uses: actions/upload-artifact@main
