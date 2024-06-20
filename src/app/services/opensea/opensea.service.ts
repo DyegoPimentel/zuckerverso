@@ -14,7 +14,7 @@ export class OpenseaService {
   private url: string = 'https://api.opensea.io/api/v2';
   private API_KEY: string = environment.OPENSEA_API_KEY;
 
-  private contractCollection: string = '0x2872018ed4e1533998fbaecad64fd5200ab12804';
+  private contractCollection: string = '0xa127b34dccdc858e312db2d99b517973c25fb1cc';
   private collection_slug: string = 'zuckerverso';
   private chain: string = 'matic';
 

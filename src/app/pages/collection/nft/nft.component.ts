@@ -33,17 +33,14 @@ export default class NftComponent implements OnInit {
     } else {
       this._router.navigate(['/collection']);
     }
-
-    // from(this._metaMaskService.isConnected())
-    // .subscribe({
-    //   next: (status) => {
-    //     console.log('esta logado nft?', status);
-    //   }
-    // });
   }
   
   ngOnInit(): void {
     this.getNft(this.nft.identifier);
+  }
+
+  quebraLinha(texto: string): string {
+    return texto.replace(/\\n\\/g, '<br>');
   }
 
   getNft(idNft: string): void {
@@ -55,7 +52,7 @@ export default class NftComponent implements OnInit {
       },
       error: (error) => {
         console.error(error);
-        this._snackBar.open('Ops... Este Zucker está em outro universo 🚀', 'Desmaterializar', {
+        this._snackBar.open('Ops... Este Zucker está em outro metaverso 🚀', 'Desmaterializar', {
           horizontalPosition: 'start',
           verticalPosition: 'top',
           panelClass: ['custom-snackbar']

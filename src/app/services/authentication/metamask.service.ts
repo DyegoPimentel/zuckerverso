@@ -15,6 +15,9 @@ declare global {
   providedIn: 'root'
 })
 export class MetamaskService {
+  requestAccounts() {
+    throw new Error('Method not implemented.');
+  }
 
   private tokenMetamaskSubject = new BehaviorSubject<string | undefined>('');
   public tokenMetamask$ = this.tokenMetamaskSubject.asObservable();
@@ -121,6 +124,7 @@ export class MetamaskService {
     this.provider = undefined;
     this.signer = undefined;
     this.tokenMetamaskSubject.next(undefined);
+    this._firebaseService.setUserLocal(undefined)
     if (localStorage.getItem('zkverso')) localStorage.removeItem('zkverso');
     this.setTextButton();
   }

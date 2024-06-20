@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import PassoAPassoComponent from './components/passo-a-passo/passo-a-passo.component';
 
 export const routes: Routes = [
     {
@@ -17,9 +18,13 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/collection/list/list.component'),
     },
     {
-        path: 'collection/nft/:id',
+        path: 'collection/zucker/:id',
         title: 'NFT',
         loadComponent: () => import('./pages/collection/nft/nft.component')
+    },
+    {
+        path: 'passo-a-passo',
+        component: PassoAPassoComponent
     },
     {
         path: '**',

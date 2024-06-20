@@ -12,7 +12,7 @@ export interface User {
   providedIn: 'root'
 })
 export class FirebaseService {
-  private userSubject = new BehaviorSubject<User>({} as User);
+  private userSubject = new BehaviorSubject<User | undefined>(undefined);
   public user$ = this.userSubject.asObservable();
   
   constructor(
@@ -47,11 +47,7 @@ export class FirebaseService {
     .valueChanges().pipe(map(user => user as User));
   }
 
-  setUserLocal(user: User): void {
+  setUserLocal(user: User | undefined): void {
     this.userSubject.next(user);
-  }
-
-  auth(): void {
-    console.log("Auth");
   }
 }

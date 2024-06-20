@@ -76,7 +76,7 @@ export default class ListComponent implements OnInit {
   }
 
   goToNftDetail(nft: any): void {
-    this._router.navigate(['/collection/nft', nft.identifier]);
+    this._router.navigate(['/collection/zucker', nft.identifier]);
   }
 
   getNfts(): void {
