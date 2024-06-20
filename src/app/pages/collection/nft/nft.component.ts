@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Nft } from '../../../services/opensea/opensea';
 import { OpenseaService } from '../../../services/opensea/opensea.service';
@@ -8,6 +8,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { MetamaskService } from '../../../services/authentication/metamask.service';
+import { FirebaseService } from '../../../services/authentication/firebase.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-nft',
@@ -19,6 +21,8 @@ import { MetamaskService } from '../../../services/authentication/metamask.servi
 export default class NftComponent implements OnInit {
   
   nft: Nft = {} as Nft;
+  random: number = Math.floor(Math.random() * (10000 - 1 + 1)) + 1;
+  lore: any;
 
   constructor(
     private _route: ActivatedRoute, 
@@ -26,6 +30,9 @@ export default class NftComponent implements OnInit {
     public _openseaService: OpenseaService,
     private _snackBar: MatSnackBar,
     private _metaMaskService: MetamaskService,
+    private _firebase: FirebaseService,
+    private _cdr: ChangeDetectorRef,
+    private sanitizer: DomSanitizer
     
   ) {
     if (this._route.snapshot.paramMap.get('id')) {
@@ -37,10 +44,22 @@ export default class NftComponent implements OnInit {
   
   ngOnInit(): void {
     this.getNft(this.nft.identifier);
+    this.getLore(this.nft.identifier);
   }
 
-  quebraLinha(texto: string): string {
-    return texto.replace(/\\n\\/g, '<br>');
+  descricaoNft(nft: Nft): string {
+
+    let text = `Este Zucker foi visto no metaverso ${this.random}, existem relatos de que ele está trabalhando em uma máquina de replicação de indivíduos para conseguir obter maiores ganhos das recompensas distribuídas aos metaversos.
+    
+    Sua identidade real ainda não foi revelada, mas sentinelas multiversais foram enviadas em uma missão para descobrir tudo sobre este engenhoso Zucker. Volte aqui em breve para saber as informações em detalhes.
+    `;
+return this.lore?.description?.replace(/\\n\\/g, '<br>') || text;
+    // return this.sanitizer.bypassSecurityTrustHtml(this.lore?.description?.replace(/\\n\\/g, '<br>') || text)
+
+  }
+
+  getLore(idNft: string): void {
+    this._firebase.getLoreById(idNft).subscribe(lore => this.lore = lore);
   }
 
   getNft(idNft: string): void {

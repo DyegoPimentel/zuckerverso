@@ -2,10 +2,14 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import 'firebase/compat/firestore'; 
-import { BehaviorSubject, Observable, from, map } from 'rxjs';
+import { BehaviorSubject, Observable, from, identity, map } from 'rxjs';
 
 export interface User {
   favorites: string[]
+}
+
+export interface Lore {
+  description: string
 }
 
 @Injectable({
@@ -45,6 +49,11 @@ export class FirebaseService {
   getUserById(token:string): Observable<User> {
     return this.firestore.collection('users').doc(token)
     .valueChanges().pipe(map(user => user as User));
+  }
+
+  getLoreById(identifier: string): Observable<Lore> {
+    return this.firestore.collection('lore').doc(identifier)
+    .valueChanges().pipe(map(lore => lore as Lore));
   }
 
   setUserLocal(user: User | undefined): void {
