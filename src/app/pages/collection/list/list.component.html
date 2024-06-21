@@ -1,50 +1,69 @@
-<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 p-10 gap-8">
-    
-    @for (nft of nftList?.nfts; track nft) {
-        <div *ngIf="!isVisible(nft.identifier)">
-            <ng-container *ngTemplateOutlet="loadingCard"></ng-container>
-        </div>
- <div [ngClass]="{
-  'hidden': !isVisible(nft.identifier),
-  'relative flex flex-col rounded-lg outline outline-offset-2 outline-2 outline-slate-200 hover:outline-primary overflow-hidden hover:scale-110 cursor-pointer': true
-}">
-  <div class="absolute text-white flex flex-col z-30" (click)="setFavorite(nft)">
-    <div class="flex flex-row p-2 gap-1 items-center" [matTooltip]="favoriteTooltip(nft.identifier)" [matTooltipPosition]="'right'" >
-      <mat-icon [ngClass]="{
-        'text-yellow-400': displayFavorite(nft.identifier),
-        'text-white drop-shadow-sm': true
-      }">star</mat-icon>
-      <span class="drop-shadow-sm">#{{nft.identifier}}</span>
+<div class="flex flex-col p-10 gap-8">
+  <ng-container *ngTemplateOutlet="filtros"></ng-container>
+  <div [ngClass]="{
+    'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8': (listMode === 'grid'),
+    'flex flex-col  gap-4': (listMode === 'list')
+    }">
+      @for (nft of nftList?.nfts; track nft) {
+          <div *ngIf="!isVisible(nft.identifier) && (listMode === 'grid')">
+              <ng-container *ngTemplateOutlet="loadingCard"></ng-container>
+          </div>
+          <hr *ngIf="listMode === 'list'"/>
+   <div [ngClass]="{
+    'hidden': !isVisible(nft.identifier),
+    'relative flex flex-col rounded-lg outline outline-offset-2 outline-2 outline-slate-200 hover:outline-primary overflow-hidden hover:scale-110': (listMode === 'grid'),
+    'flex flex-row w-full gap-4 items-center': (listMode === 'list')
+  }">
+    <div [ngClass]="{
+      'absolute text-white flex flex-col z-30': (listMode === 'grid'),
+      'flex flex-row gap-4 h-10': (listMode === 'list')
+      }" (click)="setFavorite(nft)">
+      <div class="flex flex-row p-2 gap-1 items-center" [matTooltip]="favoriteTooltip(nft.identifier)" [matTooltipPosition]="'right'" >
+        <mat-icon [ngClass]="{
+          'text-yellow-400': displayFavorite(nft.identifier),
+          'text-primary': (listMode === 'list'),
+          'text-white': (listMode === 'grid'),
+          ' drop-shadow-sm': true
+        }">star</mat-icon>
+        <span *ngIf="listMode === 'grid'" class="drop-shadow-sm">#{{nft.identifier}}</span>
+      </div>
+    </div>
+  
+    <div *ngIf="listMode === 'grid'" (click)="goToNftDetail(nft)" class="absolute w-full h-full hover:bg-gradient-to-b hover:from-black/[.4] hover:bg-opacity-50" matTooltip="Clique para ver os detalhes deste NFT">
+    </div>
+  
+    <div class="cursor-pointer" (click)="(listMode === 'list') ? goToNftDetail(nft): ''">
+      <img [src]="nft.display_image_url" class="object-cover" [ngClass]="{'rounded-full w-12 h-12': (listMode === 'list')}" (load)="imageLoaded(nft.identifier)" />
+    </div>
+
+    <span *ngIf="listMode === 'list'" class="drop-shadow-sm cursor-pointer" (click)="(listMode === 'list') ? goToNftDetail(nft): ''">Zucker #{{nft.identifier}}</span>
+  
+    <div [ngClass]="{
+      'flex flex-row items-center h-10 overflow-hidden': true,
+      'z-10 w-full': (listMode === 'grid'),
+      'ml-auto justify-center': (listMode === 'list')
+      }">
+      <button (click)="_openseaService.comprar(nft)" [ngClass]="{'flex-auto py-2 bg-primary text-white hover:bg-green-500 tracking-wider font-semibold text-lg': true, 'min-w-32': (listMode === 'list')}">
+        COMPRAR
+      </button>
+      <button [matMenuTriggerFor]="shareMenu" [ngClass]="{'flex justify-center items-center min-h-full min-w-8 bg-yellow-400': true, 'min-w-12': (listMode === 'list')}" matTooltip="Compartilhe">
+        <mat-icon class="scale-75">share</mat-icon>
+      </button>
+ 
+      <mat-menu #shareMenu="matMenu" yPosition="above">
+        <ng-template matMenuContent>
+          <button mat-menu-item (click)="copyUrl(nft.identifier)">
+            <mat-icon>content_copy</mat-icon>
+            <span>Copiar Link</span>
+          </button>
+        </ng-template>
+      </mat-menu>
     </div>
   </div>
-
-  <div (click)="goToNftDetail(nft)" class="absolute w-full h-full hover:bg-gradient-to-b hover:from-black/[.4] hover:bg-opacity-50" matTooltip="Clique para ver os detalhes deste NFT">
+  
+      }
+  
   </div>
-
-  <div>
-    <img [src]="nft.display_image_url" class="object-cover" (load)="imageLoaded(nft.identifier)" />
-  </div>
-
-  <div class="flex flex-row items-center w-full z-10">
-    <button (click)="_openseaService.comprar(nft)" class="flex-auto py-2 bg-primary text-white hover:bg-green-500 tracking-wider font-semibold text-lg">
-      COMPRAR
-    </button>
-    <button mat-button [matMenuTriggerFor]="shareMenu" class="flex justify-center items-center min-h-full min-w-8 bg-yellow-400" matTooltip="Compartilhe">
-      <mat-icon class="scale-75">share</mat-icon>
-    </button>
-    <mat-menu #shareMenu="matMenu" yPosition="above">
-      <ng-template matMenuContent>
-        <button mat-menu-item (click)="copyUrl(nft.identifier)">
-          <mat-icon>content_copy</mat-icon>
-          <span>Copiar Link</span>
-        </button>
-      </ng-template>
-    </mat-menu>
-  </div>
-</div>
-
-    }
-
 </div>
 
 
@@ -74,4 +93,18 @@
           </div>
       </div>
     </div>
+</ng-template>
+
+<ng-template #filtros>
+<div class="flex flex-row items-center gap-4 justify-end">
+  <button *ngIf="false" [ngClass]="[(listMode === 'list') ? 'bg-primary' : 'bg-white' ]" class=" hover:bg-slate-300 bg-slate-100 p-2 rounded-full w-10 h-10 flex justify-center items-center" matTooltip="Visualizar em lista">
+    <mat-icon [ngClass]="[(listMode === 'list') ? 'text-white' : 'text-primary' ]">filter_alt</mat-icon>
+  </button>
+  <button (click)="changeList('list')" [ngClass]="[(listMode === 'list') ? 'bg-primary' : 'bg-white' ]" class=" hover:bg-yellow-400 p-2 rounded-full w-10 h-10 flex justify-center items-center" matTooltip="Visualizar em lista">
+    <mat-icon [ngClass]="[(listMode === 'list') ? 'text-white' : 'text-primary' ]">list</mat-icon>
+  </button>
+  <button (click)="changeList('grid')" [ngClass]="[(listMode === 'grid') ? 'bg-primary' : 'bg-white' ]" class="hover:bg-yellow-400 p-2 rounded-full w-10 h-10 flex justify-center items-center cursor-pointer" matTooltip="Visualizar em grid">
+    <mat-icon [ngClass]="[(listMode === 'grid') ? 'text-white' : 'text-primary' ]">view_comfy_alt</mat-icon>
+  </button>
+</div>
 </ng-template>

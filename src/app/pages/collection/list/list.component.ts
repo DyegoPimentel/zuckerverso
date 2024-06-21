@@ -11,11 +11,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Clipboard, ClipboardModule } from '@angular/cdk/clipboard';
 import { FirebaseService, User } from '../../../services/authentication/firebase.service';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import {MatSelectModule} from '@angular/material/select';
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule, MatTooltipModule, MatIconModule, MatMenuModule,RouterModule,ClipboardModule],
+  imports: [CommonModule,MatSelectModule, MatTooltipModule, MatIconModule, MatMenuModule,RouterModule,ClipboardModule,MatButtonModule, MatDividerModule],
   providers: [],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css'
@@ -26,6 +29,7 @@ export default class ListComponent implements OnInit {
   cardsLoaded: string[] = [];
   user: User | undefined;
   token: string | undefined = undefined;
+  listMode: 'list'| 'grid' = 'grid';
   
   constructor(
     private _route: ActivatedRoute,
@@ -74,6 +78,11 @@ export default class ListComponent implements OnInit {
     }
   
     this._firebaseService.updateUser(this.token, this.user);
+  }
+
+  changeList(estilo: 'list' | 'grid'): void {
+    if (estilo !== this.listMode) this.listMode = estilo;
+    console.log(this.listMode);
   }
 
   goToNftDetail(nft: any): void {
