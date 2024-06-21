@@ -36,6 +36,7 @@ export class MetamaskService {
         this.provider.getSigner().then(res => {
           if (localStorage.getItem('zkverso')) {
             this.tokenMetamaskSubject.next(res?.address)
+            console.log('tem token', this.token);
             if (this.token) this.setUser();
           }
         });
