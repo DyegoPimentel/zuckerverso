@@ -1,4 +1,4 @@
-🇧🇷 Português | 🇬🇧 [English](README_en.md)
+🇧🇷 [Português](README.md) | 🇬🇧 English
 
 # SISTEMA DE COLECIONÁVEIS INTEGRADO A BLOCKCHAIN
 
