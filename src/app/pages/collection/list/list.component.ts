@@ -61,10 +61,11 @@ export default class ListComponent implements OnInit {
   }
 
   setFavorite(nft: Nft): void {
+    console.log('nft', nft);
+    console.log('token', this.token);
     if (!this.user || !this.token) return;
 
-    console.log('user', this.user);
-    console.log('token', this.token);
+
     const isFavorite: boolean = this.user.favorites.some(fav => fav === nft.identifier);
     if (isFavorite) {
       this.user.favorites = this.user.favorites.filter(res => res !== nft.identifier);

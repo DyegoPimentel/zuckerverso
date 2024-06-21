@@ -69,6 +69,7 @@ export class MetamaskService {
   }
 
   setUser(): void {
+    console.log('setUser token', this.token);
     this._firebaseService.getUserById(this.token)
     .subscribe({
       next: (user) => {
