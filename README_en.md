@@ -1,4 +1,4 @@
-🇧🇷 Português | 🇬🇧 [English]()
+🇧🇷 Português | 🇬🇧 [English](README_en.md)
 
 # SISTEMA DE COLECIONÁVEIS INTEGRADO A BLOCKCHAIN
 
@@ -6,7 +6,7 @@ Este sistema foi desenvolvido para compor o projeto prático do TCC - SISTEMA DE
 
 Este sistema é uma plataforma WEB 3 para compra e venda de NFTs (Non-Fungible Token), e utilizou de recursos como a Metamask e o Firebase para criar um sistema de login anonimizado. 
 
-Caso tenha interesse em saber mais detalhes sobre este projeto, sinta-se avontade para ver o Documento de apresentação deste TCC [neste link]().
+Caso tenha interesse em saber mais detalhes sobre este projeto, sinta-se avontade para ver o Documento de apresentação deste TCC [neste link](TCC - SISTEMA DE COLECIONÁVEIS INTEGRADO A BLOCKCHAIN.pdf).
 
 🟢 [Acesse o sistema para ve-lo em funcionamento](https://zuckerverso.com.br) 🟢
 
