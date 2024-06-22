@@ -74,7 +74,7 @@ export class MetamaskService {
       next: (user) => {
         if (!user) {
           user = {favorites: []};
-          this._firebaseService.addUser(this.token, user);
+          if (user && this.token) this._firebaseService.addUser(this.token, user);
         }
         this._firebaseService.setUserLocal(user);
       },
