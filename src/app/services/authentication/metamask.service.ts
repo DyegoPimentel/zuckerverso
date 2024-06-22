@@ -52,7 +52,7 @@ export class MetamaskService {
 
   setTextButton(): void {
     let text: any = 'Conecte sua Metamask';
-    const token: string = this.token;
+    const token: string | undefined = this.token;
 
     if (token) {
       const prefix = token.substring(0, 4);
@@ -84,8 +84,8 @@ export class MetamaskService {
     })
   }
 
-  get token(): string {
-    let token: string | undefined = '';
+  get token(): string | undefined {
+    let token: string | undefined = undefined;
     this.tokenMetamask$.subscribe({
       next: (tkn) => {
         token = tkn;

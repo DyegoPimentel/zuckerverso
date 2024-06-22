@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import 'firebase/compat/firestore'; 
-import { BehaviorSubject, Observable, from, identity, map } from 'rxjs';
+import { BehaviorSubject, Observable, from, identity, map, of } from 'rxjs';
 
 export interface User {
   favorites: string[]
@@ -46,7 +46,8 @@ export class FirebaseService {
       map(users => users as User[]));
   }
 
-  getUserById(token:string): Observable<User> {
+  getUserById(token:string | undefined): Observable<User | undefined> {
+    if (!token) return of(undefined);
     return this.firestore.collection('users').doc(token)
     .valueChanges().pipe(map(user => user as User));
   }
