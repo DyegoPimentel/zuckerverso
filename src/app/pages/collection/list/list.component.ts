@@ -109,7 +109,7 @@ export default class ListComponent implements OnInit {
   favoriteButtonTooltip(): string {
     let texto: string | undefined;
 
-    console.log('token fbt', this.token);
+    console.log('token fbt', typeof this.token);
     if (!this.token) texto = 'Conecte sua Metamask para favoritar este Zucker';
 
     return texto || !this.filters.favorites ? 'Filtrar por favoritos' : 'Mostrar todos todos';
