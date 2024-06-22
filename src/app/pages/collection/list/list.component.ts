@@ -33,7 +33,8 @@ export default class ListComponent implements OnInit {
   token: string | undefined = undefined;
   listMode: 'list'| 'grid' = 'grid';
   filters: Filters = {
-    favorites: false
+    favorites: false,
+    sortOrder: 'asc'
   }
 
   constructor(
@@ -69,13 +70,25 @@ export default class ListComponent implements OnInit {
     
   }
 
-  filterBy(filtro: 'favorites'): void {
+  filterBy(filtro: 'favorites' | 'id'): void {
     if (filtro === 'favorites') {
       this.filters.favorites = !this.filters.favorites; 
       
       this.filters.favorites 
       ? this.nftListFiltered = this.nftList?.nfts.filter(nft => this.user?.favorites.some(value => value === nft.identifier))
       : this.nftListFiltered = this.nftList?.nfts;
+    }
+
+    if (filtro === 'id') {
+      this.nftListFiltered = this.nftListFiltered?.sort((a, b) => {
+        if (this.filters.sortOrder === 'asc') {
+          return parseInt(a.identifier) - parseInt(b.identifier);
+        } else {
+          return parseInt(b.identifier) - parseInt(a.identifier);
+        }
+      });
+
+      this.filters.sortOrder = (this.filters.sortOrder === 'asc') ? 'desc' : 'asc';
     }
   }
 

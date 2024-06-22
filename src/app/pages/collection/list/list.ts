@@ -1,3 +1,4 @@
 export interface Filters {
-    favorites: boolean
+    favorites: boolean,
+    sortOrder: 'asc' | 'desc';
 }

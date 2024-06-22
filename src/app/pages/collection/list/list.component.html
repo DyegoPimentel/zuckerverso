@@ -97,7 +97,10 @@
 
 <ng-template #filtros>
 <div class="flex flex-row items-center gap-2 justify-end">
-  <button (click)="filterBy('favorites')" [ngClass]="[(filters.favorites) ? 'bg-primary' : 'bg-white' ]" class=" hover:bg-yellow-400 p-2 rounded-full w-10 h-10 flex justify-center items-center" [matTooltip]="!filters.favorites ? 'Filtrar por favoritos' : 'Filtrar todos'">
+  <button (click)="filterBy('id')" [ngClass]="[(filters.sortOrder === 'desc') ? 'bg-primary' : 'bg-white' ]" class=" hover:bg-yellow-400 p-2 rounded-full w-10 h-10 flex justify-center items-center" [matTooltip]="(filters.sortOrder === 'asc') ? 'Ordenar ascendente' : 'Ordenar descendente'">
+    <mat-icon [ngClass]="[(filters.sortOrder === 'desc') ? 'text-white' : 'text-primary' ]">{{(filters.sortOrder === 'desc') ? 'north' : 'south'}}</mat-icon>
+  </button>
+  <button (click)="filterBy('favorites')" [ngClass]="[(filters.favorites) ? 'bg-primary' : 'bg-white' ]" class=" hover:bg-yellow-400 p-2 rounded-full w-10 h-10 flex justify-center items-center" [matTooltip]="!filters.favorites ? 'Filtrar por favoritos' : 'Mostrar todos todos'">
     <mat-icon [ngClass]="[(filters.favorites) ? 'text-white' : 'text-primary' ]">star</mat-icon>
   </button>
   <button (click)="changeList('list')" [ngClass]="[(listMode === 'list') ? 'bg-primary' : 'bg-white' ]" class=" hover:bg-yellow-400 p-2 rounded-full w-10 h-10 flex justify-center items-center" matTooltip="Visualizar em lista">
