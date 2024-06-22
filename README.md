@@ -23,7 +23,7 @@ Esta é uma breve explicação da estrutura de login utilizado neste projeto, ge
 
 Aproveitando de uma das caracteristicas criadas pela Blockchain, utilizei a chave pública da carteira de criptomoedas (no nosso caso a metamask) para ser o identificador do usuário, levando em consideração que a chave pública é uma hash unica. Desta forma, quando o usuário conecta sua metamask no sistema, a chave publica é armazenada como um documento na coleção de usuários no Firestore, e este documento inicialmente tem apenas um atributo que é o array de favoritos do usuário. Conforme pode ser visto na imagem abaixo:
 
-![Alt text](<Captura de Tela 2024-06-20 às 23.37.00.png>)
+![Alt text](<DB noSQL - Firestore.png>)
 
 Desta forma mantemos a integridade dos dados e sua unicidade, e não invadimos a privacidade do usuário.
 
