@@ -36,7 +36,6 @@ export class MetamaskService {
         this.provider.getSigner().then(res => {
           if (localStorage.getItem('zkverso')) {
             this.tokenMetamaskSubject.next(res?.address)
-            console.log('tem token', this.token);
             if (this.token) this.setUser();
           }
         });
@@ -70,7 +69,6 @@ export class MetamaskService {
   }
 
   setUser(): void {
-    console.log('setUser token', this.token);
     this._firebaseService.getUserById(this.token)
     .subscribe({
       next: (user) => {

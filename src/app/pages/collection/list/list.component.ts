@@ -14,6 +14,7 @@ import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/datab
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import {MatSelectModule} from '@angular/material/select';
+import { Filters } from './list';
 
 @Component({
   selector: 'app-list',
@@ -25,12 +26,16 @@ import {MatSelectModule} from '@angular/material/select';
 })
 export default class ListComponent implements OnInit {
   nftList: NftsByCollection | undefined;
+  nftListFiltered: Nft[] | undefined;
   mockCardArray: number[] = Array(32).fill(0).map((x, i) => i);
   cardsLoaded: string[] = [];
   user: User | undefined;
   token: string | undefined = undefined;
   listMode: 'list'| 'grid' = 'grid';
-  
+  filters: Filters = {
+    favorites: false
+  }
+
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
@@ -64,9 +69,17 @@ export default class ListComponent implements OnInit {
     
   }
 
+  filterBy(filtro: 'favorites'): void {
+    if (filtro === 'favorites') {
+      this.filters.favorites = !this.filters.favorites; 
+      
+      this.filters.favorites 
+      ? this.nftListFiltered = this.nftList?.nfts.filter(nft => this.user?.favorites.some(value => value === nft.identifier))
+      : this.nftListFiltered = this.nftList?.nfts;
+    }
+  }
+
   setFavorite(nft: Nft): void {
-    console.log('nft', nft);
-    console.log('token', this.token);
     if (!this.user || !this.token) return;
 
 
@@ -94,6 +107,7 @@ export default class ListComponent implements OnInit {
     .subscribe({
       next: (res: NftsByCollection) => {
         this.nftList = res;
+        this.nftListFiltered = res.nfts;
       },
       error: (error) => {
         console.error(error);

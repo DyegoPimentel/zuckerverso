@@ -4,7 +4,7 @@
     'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8': (listMode === 'grid'),
     'flex flex-col  gap-4': (listMode === 'list')
     }">
-      @for (nft of nftList?.nfts; track nft) {
+      @for (nft of nftListFiltered; track nft) {
           <div *ngIf="!isVisible(nft.identifier) && (listMode === 'grid')">
               <ng-container *ngTemplateOutlet="loadingCard"></ng-container>
           </div>
@@ -96,9 +96,9 @@
 </ng-template>
 
 <ng-template #filtros>
-<div class="flex flex-row items-center gap-4 justify-end">
-  <button *ngIf="false" [ngClass]="[(listMode === 'list') ? 'bg-primary' : 'bg-white' ]" class=" hover:bg-slate-300 bg-slate-100 p-2 rounded-full w-10 h-10 flex justify-center items-center" matTooltip="Visualizar em lista">
-    <mat-icon [ngClass]="[(listMode === 'list') ? 'text-white' : 'text-primary' ]">filter_alt</mat-icon>
+<div class="flex flex-row items-center gap-2 justify-end">
+  <button (click)="filterBy('favorites')" [ngClass]="[(filters.favorites) ? 'bg-primary' : 'bg-white' ]" class=" hover:bg-yellow-400 p-2 rounded-full w-10 h-10 flex justify-center items-center" [matTooltip]="!filters.favorites ? 'Filtrar por favoritos' : 'Filtrar todos'">
+    <mat-icon [ngClass]="[(filters.favorites) ? 'text-white' : 'text-primary' ]">star</mat-icon>
   </button>
   <button (click)="changeList('list')" [ngClass]="[(listMode === 'list') ? 'bg-primary' : 'bg-white' ]" class=" hover:bg-yellow-400 p-2 rounded-full w-10 h-10 flex justify-center items-center" matTooltip="Visualizar em lista">
     <mat-icon [ngClass]="[(listMode === 'list') ? 'text-white' : 'text-primary' ]">list</mat-icon>
