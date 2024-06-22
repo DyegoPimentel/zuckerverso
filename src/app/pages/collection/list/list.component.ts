@@ -106,6 +106,16 @@ export default class ListComponent implements OnInit {
     this._firebaseService.updateUser(this.token, this.user);
   }
 
+  favoriteButtonTooltip(): string {
+    let texto: string | undefined;
+
+    if (!this.token) texto = 'Conecte sua Metamask para favoritar este Zucker';
+
+    return texto || !this.filters.favorites ? 'Filtrar por favoritos' : 'Mostrar todos todos';
+   
+  }
+
+
   changeList(estilo: 'list' | 'grid'): void {
     if (estilo !== this.listMode) this.listMode = estilo;
     console.log(this.listMode);
