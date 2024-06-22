@@ -97,26 +97,35 @@
 
 <ng-template #filtros>
 
-  <div class="flex flex-row items-center gap-2 justify-between">
+  <div class="flex flex-row items-center gap-2 justify-end">
     
     <button (click)="filterBy('favorites')" 
-      [ngClass]="[(filters.favorites) ? 'bg-primary' : 'bg-white' ]" class=" hover:bg-yellow-400 p-2 rounded-full w-10 h-10 flex justify-center items-center" 
+      [ngClass]="[
+        (filters.favorites) ? 'bg-primary' : 'bg-white',
+        token ? 'hover:bg-yellow-400 cursor-pointer' : 'bg-slate-400 text-slate-600 cursor-not-allowed'
+        ]" 
+      class="p-2 rounded-full w-10 h-10 flex justify-center items-center" 
       [matTooltip]="favoriteButtonTooltip()"
       [disabled]="!token">
-      <mat-icon [ngClass]="[(filters.favorites) ? 'text-white' : 'text-primary' ]">star</mat-icon>
+      <mat-icon 
+        [ngClass]="[
+          (filters.favorites) ? 'text-white' : 'text-primary',
+          token ? '' : 'text-slate-600'
+          ]">
+          star
+      </mat-icon>
     </button>
   
-    <div class="flex flex-row gap-2 items-center">
-      <button (click)="filterBy('id')" [ngClass]="[(filters.sortOrder === 'desc') ? 'bg-primary' : 'bg-white' ]" class=" hover:bg-yellow-400 p-2 rounded-full w-10 h-10 flex justify-center items-center" [matTooltip]="(filters.sortOrder === 'asc') ? 'Ordenar ascendente' : 'Ordenar descendente'">
-        <mat-icon [ngClass]="[(filters.sortOrder === 'desc') ? 'text-white' : 'text-primary' ]">{{(filters.sortOrder === 'desc') ? 'north' : 'south'}}</mat-icon>
-      </button>
-    
-      <button (click)="changeList('list')" [ngClass]="[(listMode === 'list') ? 'bg-primary' : 'bg-white' ]" class=" hover:bg-yellow-400 p-2 rounded-full w-10 h-10 flex justify-center items-center" matTooltip="Visualizar em lista">
-        <mat-icon [ngClass]="[(listMode === 'list') ? 'text-white' : 'text-primary' ]">list</mat-icon>
-      </button>
-      <button (click)="changeList('grid')" [ngClass]="[(listMode === 'grid') ? 'bg-primary' : 'bg-white' ]" class="hover:bg-yellow-400 p-2 rounded-full w-10 h-10 flex justify-center items-center cursor-pointer" matTooltip="Visualizar em grid">
-        <mat-icon [ngClass]="[(listMode === 'grid') ? 'text-white' : 'text-primary' ]">view_comfy_alt</mat-icon>
-      </button>
-  </div>
+    <button (click)="filterBy('id')" [ngClass]="[(filters.sortOrder === 'desc') ? 'bg-primary' : 'bg-white' ]" class=" hover:bg-yellow-400 p-2 rounded-full w-10 h-10 flex justify-center items-center" [matTooltip]="(filters.sortOrder === 'asc') ? 'Ordenar ascendente' : 'Ordenar descendente'">
+      <mat-icon [ngClass]="[(filters.sortOrder === 'desc') ? 'text-white' : 'text-primary' ]">{{(filters.sortOrder === 'desc') ? 'north' : 'south'}}</mat-icon>
+    </button>
+  
+    <button (click)="changeList('list')" [ngClass]="[(listMode === 'list') ? 'bg-primary' : 'bg-white' ]" class=" hover:bg-yellow-400 p-2 rounded-full w-10 h-10 flex justify-center items-center" matTooltip="Visualizar em lista">
+      <mat-icon [ngClass]="[(listMode === 'list') ? 'text-white' : 'text-primary' ]">list</mat-icon>
+    </button>
+    <button (click)="changeList('grid')" [ngClass]="[(listMode === 'grid') ? 'bg-primary' : 'bg-white' ]" class="hover:bg-yellow-400 p-2 rounded-full w-10 h-10 flex justify-center items-center cursor-pointer" matTooltip="Visualizar em grid">
+      <mat-icon [ngClass]="[(listMode === 'grid') ? 'text-white' : 'text-primary' ]">view_comfy_alt</mat-icon>
+    </button>
+ 
 </div>
 </ng-template>
