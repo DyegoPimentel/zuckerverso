@@ -132,7 +132,7 @@ export class MetamaskService {
   }
 
   cleanToken(): void {
-    localStorage.removeItem('zkverso');
+    localStorage.clear()
     this.tokenMetamaskSubject.next(undefined);
   }
 
