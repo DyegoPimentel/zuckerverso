@@ -15,9 +15,6 @@ declare global {
   providedIn: 'root'
 })
 export class MetamaskService {
-  requestAccounts() {
-    throw new Error('Method not implemented.');
-  }
 
   private tokenMetamaskSubject = new BehaviorSubject<string | undefined>('');
   public tokenMetamask$ = this.tokenMetamaskSubject.asObservable();
@@ -31,23 +28,37 @@ export class MetamaskService {
   constructor(private _firebaseService: FirebaseService) { 
     this.provider = new ethers.BrowserProvider(window.ethereum);
 
-    if (this.isMetaMaskInstalled()) {
-      if (window.ethereum.isConnected()) {
-        this.provider.getSigner().then(res => {
-          if (localStorage.getItem('zkverso')) {
-            this.tokenMetamaskSubject.next(res?.address)
-            if (this.token) this.setUser();
-          }
-        });
+    try {
+      if (this.isMetaMaskInstalled()) {
+        if (window.ethereum.isConnected()) {
+          this.verifyToken();
+        } else {
+          localStorage.removeItem('zkverso');
+        } 
+        this.setTextButton();
+  
       } else {
-        localStorage.removeItem('zkverso');
-      } 
-      this.setTextButton();
-
-    } else {
-      console.log('Instale a metamask para fazer o login.');
+        console.log('Instale a metamask para fazer o login.');
+      }
+    } catch (error: any) {
+      this.cleanToken();
+      console.log('catch constructor', error);
     }
-    
+  }
+
+  verifyToken(): void {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+
+    provider.getSigner().then(res => {
+      if (localStorage.getItem('zkverso') || res?.address) {
+        this.tokenMetamaskSubject.next(res?.address)
+        if (this.token) {
+          this.setTextButton();
+          this.setUser()};
+      }
+    }).catch((error: any) => {
+      this.cleanToken();
+    });
   }
 
   setTextButton(): void {
@@ -107,16 +118,22 @@ export class MetamaskService {
         const signer = this.signer;
         return { provider, signer};
       } catch (error: any) {
-        if (error.code === 4001) { // Usuário rejeitou a solicitação
-          console.error('O usuário rejeitou a solicitação de conexão com MetaMask');
-        } else if (error.code === -32002) { // Requisição em andamento
-          console.error('Existe uma requisição em andamento, verifique sua MetaMask');
-        }
-        else {
-          console.error('Erro ao conectar, verifique sua MetaMask');
-        }
+          this.cleanToken();
+          if (error.code === 4001) { // Usuário rejeitou a solicitação
+            console.error('O usuário rejeitou a solicitação de conexão com MetaMask');
+          } else if (error.code === -32002) { // Requisição em andamento
+            console.error('Existe uma requisição em andamento, verifique sua MetaMask');
+          }
+          else {
+            console.error('Erro ao conectar, verifique sua MetaMask');
+          }
       }
     }
+  }
+
+  cleanToken(): void {
+    localStorage.removeItem('zkverso');
+    this.tokenMetamaskSubject.next(undefined);
   }
 
   disconnect() {
