@@ -8,7 +8,7 @@ Este sistema é uma plataforma WEB 3 para compra e venda de NFTs (Non-Fungible T
 
 Caso tenha interesse em saber mais detalhes sobre este projeto, sinta-se avontade para ver o Documento de apresentação deste TCC [neste link]().
 
-🟢 [Acesse o sistema para ve-lo em funcionamento](https://zucerverso.com.br) 🟢
+🟢 [Acesse o sistema para ve-lo em funcionamento](https://zuckerverso.com.br) 🟢
 
 ## 🔴 Informaçoes Importantes
 - O sistema foi desenvolvido em Angular na versão 18;
