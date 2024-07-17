@@ -34,7 +34,7 @@ export default class HomeComponent implements OnInit {
       });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { console.log('onInit home');}
 
   goToList(): void {
     this._router.navigate(['/collection/list']);

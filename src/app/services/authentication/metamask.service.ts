@@ -26,9 +26,11 @@ export class MetamaskService {
   private signer: ethers.Signer | undefined;
 
   constructor(private _firebaseService: FirebaseService) { 
+    console.log('constructor metamask');
     this.provider = new ethers.BrowserProvider(window.ethereum);
 
     try {
+      console.log('try metamask');
       if (this.isMetaMaskInstalled()) {
         if (window.ethereum.isConnected()) {
           this.verifyToken();
