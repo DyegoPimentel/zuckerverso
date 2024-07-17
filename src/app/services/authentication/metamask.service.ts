@@ -27,7 +27,7 @@ export class MetamaskService {
 
   constructor(private _firebaseService: FirebaseService) { 
     console.log('constructor metamask');
-    this.provider = new ethers.BrowserProvider(window.ethereum);
+    //this.provider = new ethers.BrowserProvider(window.ethereum);
 
     try {
       console.log('try metamask');
