@@ -3,6 +3,7 @@ import { BehaviorSubject, Subject, from, of } from 'rxjs';
 import { ethers } from 'ethers';
 import { tick } from '@angular/core/testing';
 import { FirebaseService } from './firebase.service';
+import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 
 
 declare global {
@@ -25,7 +26,10 @@ export class MetamaskService {
   private provider: ethers.BrowserProvider | undefined;
   private signer: ethers.Signer | undefined;
 
-  constructor(private _firebaseService: FirebaseService) { 
+  constructor(
+    private _firebaseService: FirebaseService,
+    private _snackBar: MatSnackBar,
+  ) { 
     console.log('constructor metamask');
     //this.provider = new ethers.BrowserProvider(window.ethereum);
 
@@ -108,6 +112,9 @@ export class MetamaskService {
   }
 
   async connectToMetaMask(): Promise<any> {
+    // this.provider = new ethers.BrowserProvider(window.ethereum);
+    console.log('connect window.ethereum',  window.ethereum);
+    console.log('this.provider', this.provider);
     if (this.provider) {
       try {
         await this.provider.send('eth_requestAccounts', []);
@@ -130,6 +137,19 @@ export class MetamaskService {
             console.error('Erro ao conectar, verifique sua MetaMask');
           }
       }
+    } else {
+
+      const snackBarRef: MatSnackBarRef<SimpleSnackBar> = this._snackBar.open('Instale a carteira MetaMask para se conectar', 'Ir para o site da Metamask', {
+        horizontalPosition: 'start',
+        verticalPosition: 'top',
+        duration: 5000,
+        panelClass: ['custom-snackbar']
+      });
+
+      snackBarRef.onAction().subscribe(() => {
+        window.open('https://metamask.io', '_blank');
+      });
+      // window.open('https://metamask.io', '_blank');
     }
   }
 

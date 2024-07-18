@@ -18,7 +18,7 @@
       'absolute text-white flex flex-col z-30': (listMode === 'grid'),
       'flex flex-row gap-4 h-10': (listMode === 'list')
       }" (click)="setFavorite(nft)">
-      <div class="flex flex-row p-2 gap-1 items-center" [matTooltip]="favoriteTooltip(nft.identifier)" [matTooltipPosition]="'right'" >
+      <div class="flex flex-row p-2 gap-1 items-center cursor-pointer" [matTooltip]="favoriteTooltip(nft.identifier)" [matTooltipPosition]="'right'" >
         <mat-icon [ngClass]="{
           'text-yellow-400': displayFavorite(nft.identifier),
           'text-primary': (listMode === 'list'),
@@ -29,7 +29,7 @@
       </div>
     </div>
   
-    <div *ngIf="listMode === 'grid'" (click)="goToNftDetail(nft)" class="absolute w-full h-full hover:bg-gradient-to-b hover:from-black/[.4] hover:bg-opacity-50" matTooltip="Clique para ver os detalhes deste NFT">
+    <div *ngIf="listMode === 'grid'" (click)="goToNftDetail(nft)" class="absolute w-full h-5/6 cursor-pointer hover:bg-gradient-to-b hover:from-black/[.4] hover:bg-opacity-50" matTooltip="Clique para ver os detalhes deste NFT" [matTooltipPosition]="'above'">
     </div>
   
     <div class="cursor-pointer" (click)="(listMode === 'list') ? goToNftDetail(nft): ''">
@@ -43,7 +43,9 @@
       'z-10 w-full': (listMode === 'grid'),
       'ml-auto justify-center': (listMode === 'list')
       }">
-      <button (click)="_openseaService.comprar(nft)" [ngClass]="{'flex-auto py-2 bg-primary text-white hover:bg-green-500 tracking-wider font-semibold text-lg': true, 'min-w-32': (listMode === 'list')}">
+      <button (click)="_openseaService.comprar(nft)" 
+        [ngClass]="{'flex-auto py-2 bg-primary text-white hover:bg-green-500 tracking-wider font-semibold text-lg cursor-pointer': true, 'min-w-32': (listMode === 'list')}"
+        >
         COMPRAR
       </button>
       <button [matMenuTriggerFor]="shareMenu" [ngClass]="{'flex justify-center items-center min-h-full min-w-8 bg-yellow-400': true, 'min-w-12': (listMode === 'list')}" matTooltip="Compartilhe">
