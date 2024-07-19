@@ -1,7 +1,7 @@
 <div *ngIf="nft?.name; else spinner" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 p-10">
     <div class="flex flex-col gap-6">
         <img [src]="nft.display_image_url" class="rounded-lg shadow-lg"/>
-        <button class="text-white bg-primary rounded-full py-2 hover:bg-green-500 tracking-wider font-semibold text-lg" 
+        <button class="text-white bg-primary dark:bg-primary-400 rounded-full py-2 hover:bg-green-500 tracking-wider font-semibold text-lg" 
             matRipple
             [matRippleRadius]="350"
             [matRippleColor]="'rgba(255,255,255,.1)'"
@@ -12,8 +12,8 @@
     </div>
     <div class="flex flex-col gap-4 justify-between md:col-span-2">
         <div class="flex flex-col gap-4">
-            <h1 class="text-4xl subpixel-antialiased text-primary font-extrabold tracking-wide line-clamp-2">{{nft.name}}</h1>
-            <span class='whitespace-pre-line' >{{ descricaoNft(nft) }}</span>
+            <h1 class="text-4xl subpixel-antialiased text-primary dark:text-primary-400 font-extrabold tracking-wide line-clamp-2">{{nft.name}}</h1>
+            <span class='whitespace-pre-line dark:text-white' >{{ descricaoNft(nft) }}</span>
         </div>   
     </div>
 </div>
