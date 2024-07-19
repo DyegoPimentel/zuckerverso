@@ -112,44 +112,40 @@ export class MetamaskService {
   }
 
   async connectToMetaMask(): Promise<any> {
-    // this.provider = new ethers.BrowserProvider(window.ethereum);
-    console.log('connect window.ethereum',  window.ethereum);
-    console.log('this.provider', this.provider);
-    if (this.provider) {
+    if (typeof window.ethereum !== 'undefined') {
+      this.provider = new ethers.BrowserProvider(window.ethereum);
+  
       try {
         await this.provider.send('eth_requestAccounts', []);
         this.signer = await this.provider.getSigner();
         this.tokenMetamaskSubject.next(await this.signer.getAddress());
-      
+  
         if (this.token) this.setUser();
         this.setTextButton();
         const provider = this.provider;
         const signer = this.signer;
-        return { provider, signer};
+        return { provider, signer };
       } catch (error: any) {
-          this.cleanToken();
-          if (error.code === 4001) { // Usuário rejeitou a solicitação
-            console.error('O usuário rejeitou a solicitação de conexão com MetaMask');
-          } else if (error.code === -32002) { // Requisição em andamento
-            console.error('Existe uma requisição em andamento, verifique sua MetaMask');
-          }
-          else {
-            console.error('Erro ao conectar, verifique sua MetaMask');
-          }
+        this.cleanToken();
+        if (error.code === 4001) {
+          console.error('O usuário rejeitou a solicitação de conexão com MetaMask');
+        } else if (error.code === -32002) {
+          console.error('Existe uma requisição em andamento, verifique sua MetaMask');
+        } else {
+          console.error('Erro ao conectar, verifique sua MetaMask');
+        }
       }
     } else {
-
-      const snackBarRef: MatSnackBarRef<SimpleSnackBar> = this._snackBar.open('Instale a carteira MetaMask para se conectar', 'Ir para o site da Metamask', {
+      const snackBarRef: MatSnackBarRef<SimpleSnackBar> = this._snackBar.open('Instale a carteira MetaMask para se conectar', 'Ir para o site da MetaMask', {
         horizontalPosition: 'start',
         verticalPosition: 'top',
         duration: 5000,
         panelClass: ['custom-snackbar']
       });
-
+  
       snackBarRef.onAction().subscribe(() => {
         window.open('https://metamask.io', '_blank');
       });
-      // window.open('https://metamask.io', '_blank');
     }
   }
 
