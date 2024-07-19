@@ -59,7 +59,7 @@ export default class ListComponent implements OnInit {
     const protocol = window.location.protocol;
     const host = window.location.host;
 
-    this.clipboard.copy(`${protocol}//${host}/collection/nft/${nftId}`);
+    this.clipboard.copy(`${protocol}//${host}/collection/zucker/${nftId}`);
 
     this._snackBar.open('Este Zucker está preso na sua área de transferência. Seja rápido, ele é escorregadio... ⏳', 'Ok', {
       horizontalPosition: 'start',
