@@ -6,6 +6,8 @@ Este sistema foi desenvolvido para compor o projeto prático do TCC - SISTEMA DE
 
 Este sistema é uma plataforma WEB 3 para compra e venda de NFTs (Non-Fungible Token), e utilizou de recursos como a Metamask e o Firebase para criar um sistema de login anonimizado. 
 
+🧑🏻‍💻 [Veja o passo a passo do desenvolvimento deste projeto](https://www.youtube.com/playlist?list=PLAF4U4GKtW-xkvV45upS4p4UbvtaL3f5J) 👀
+
 Caso tenha interesse em saber mais detalhes sobre este projeto, sinta-se avontade para ver o Documento de apresentação deste TCC [neste link](https://github.com/DyegoPimentel/zuckerverso/blob/main/TCC%20-%20SISTEMA%20DE%20COLECION%C3%81VEIS%20INTEGRADO%20A%20BLOCKCHAIN.pdf).
 
 🟢 [Acesse o sistema para ve-lo em funcionamento](https://zuckerverso.com.br) 🟢

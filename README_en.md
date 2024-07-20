@@ -6,6 +6,8 @@ This system was developed as part of the practical project for the final thesis 
 
 This system is a WEB 3 platform for buying and selling NFTs (Non-Fungible Tokens) and utilizes resources such as Metamask and Firebase to create an anonymized login system.
 
+🧑🏻‍💻 [Check out the step-by-step development of this project](https://www.youtube.com/playlist?list=PLAF4U4GKtW-xkvV45upS4p4UbvtaL3f5J) 👀
+
 If you are interested in learning more about this project, feel free to check the Presentation Document of this Thesis [at this link](TCC - SISTEMA DE COLECIONÁVEIS INTEGRADO A BLOCKCHAIN.pdf).
 
 🟢 [Access the system to see it in action](https://zuckerverso.com.br) 🟢
