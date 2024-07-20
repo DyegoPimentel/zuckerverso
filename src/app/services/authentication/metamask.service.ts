@@ -30,14 +30,10 @@ export class MetamaskService {
     private _firebaseService: FirebaseService,
     private _snackBar: MatSnackBar,
   ) { 
-    console.log('constructor metamask');
     //this.provider = new ethers.BrowserProvider(window.ethereum);
 
     try {
-      console.log('try metamask');
       if (this.isMetaMaskInstalled()) {
-        console.log('object', window.ethereum.isConnected());
-        console.log('we', window.ethereum);
         if (window.ethereum.isConnected()) {
           this.verifyToken();
         } else {
