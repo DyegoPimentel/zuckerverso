@@ -36,6 +36,8 @@ export class MetamaskService {
     try {
       console.log('try metamask');
       if (this.isMetaMaskInstalled()) {
+        console.log('object', window.ethereum.isConnected());
+        console.log('we', window.ethereum);
         if (window.ethereum.isConnected()) {
           this.verifyToken();
         } else {
@@ -53,17 +55,24 @@ export class MetamaskService {
   }
 
   verifyToken(): void {
-    const provider = new ethers.BrowserProvider(window.ethereum);
 
-    provider.getSigner().then(res => {
-      if (localStorage.getItem('zkverso') || res?.address) {
-        this.tokenMetamaskSubject.next(res?.address)
-        if (this.token) {
-          this.setTextButton();
-          this.setUser()};
+    from(window.ethereum.request({ method: 'eth_requestAccounts' }))
+    .subscribe({
+      next: (accounts) => {
+        const acc: string[] = (accounts as string[]);
+     
+        if (localStorage.getItem('zkverso')) {
+          this.tokenMetamaskSubject.next(localStorage.getItem('zkverso') || undefined);
+          if (this.token) {
+            this.setTextButton();
+            this.setUser();
+          }
+        }
+      },
+      error: (err) => {
+        console.error('Error requesting accounts:', err);
+        this.cleanToken();
       }
-    }).catch((error: any) => {
-      this.cleanToken();
     });
   }
 
