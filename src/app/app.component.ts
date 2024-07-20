@@ -6,11 +6,12 @@ import { MatMenuModule } from '@angular/material/menu';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatDividerModule, MatIconModule, RouterOutlet, MatIconModule, MatMenuModule, RouterModule],
+  imports: [CommonModule, MatButtonModule, MatDividerModule, MatIconModule, RouterOutlet, MatIconModule, MatMenuModule, RouterModule, MatTooltipModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -64,6 +65,13 @@ export class AppComponent {
     } else {
       document.documentElement.classList.remove('dark');
     }
+  }
+
+  tooltipMetamaskButton(): string {
+    let tooltip: string = this.textButton;
+
+    if (tooltip === localStorage.getItem('zkverso')) tooltip = 'Copiar chave pública';
+    return tooltip;
   }
 
   logoutMetamask(): void {
