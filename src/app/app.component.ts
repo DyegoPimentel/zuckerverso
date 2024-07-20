@@ -23,10 +23,47 @@ export class AppComponent {
   constructor(
     private _metamaskService: MetamaskService,
   ) {
+    this.initializeTheme();
+
     this._metamaskService.textButton$.subscribe({
       next : (texto: string) => { this.textButton = texto },
       error: (e) => {console.log('error',e);}
     });
+  }
+
+  toggleTheme(): void {
+    const htmlElement = document.documentElement;
+    if (htmlElement.classList.contains('dark')) {
+      htmlElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    } else {
+      htmlElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    }
+  }
+
+  isDarkMode(): boolean {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    if (savedTheme) return (savedTheme === 'dark');
+    return prefersDarkScheme;
+  }
+
+  initializeTheme(): void {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    console.log('prefers',window.matchMedia("(prefers-color-scheme: dark)").matches);
+    if (savedTheme) {
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    } else if (prefersDarkScheme) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   }
 
   logoutMetamask(): void {

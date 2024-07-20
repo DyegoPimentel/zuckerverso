@@ -11,7 +11,7 @@
           <hr *ngIf="listMode === 'list'"/>
    <div [ngClass]="{
     'hidden': !isVisible(nft.identifier),
-    'relative flex flex-col rounded-lg outline outline-offset-2 outline-2 outline-slate-200 hover:outline-primary dark:hover:outline-primary-400 overflow-hidden hover:scale-110': (listMode === 'grid'),
+    'relative flex flex-col rounded-lg outline outline-offset-2 outline-2 outline-slate-200 dark:outline-slate-800 hover:outline-primary dark:hover:outline-primary-400 overflow-hidden hover:scale-110': (listMode === 'grid'),
     'flex flex-row w-full gap-4 items-center': (listMode === 'list')
   }">
     <div [ngClass]="{
@@ -20,8 +20,8 @@
       }" (click)="setFavorite(nft)">
       <div class="flex flex-row p-2 gap-1 items-center cursor-pointer" [matTooltip]="favoriteTooltip(nft.identifier)" [matTooltipPosition]="'right'" >
         <mat-icon [ngClass]="{
-          'text-yellow-400': displayFavorite(nft.identifier),
-          'text-primary': (listMode === 'list'),
+          'text-primary dark:text-purple-300': (listMode === 'list'),
+          'text-yellow-400 dark:text-yellow-500': displayFavorite(nft.identifier),
           'text-white': (listMode === 'grid'),
           ' drop-shadow-sm': true
         }">star</mat-icon>
@@ -36,7 +36,7 @@
       <img [src]="nft.display_image_url" class="object-cover" [ngClass]="{'rounded-full w-12 h-12': (listMode === 'list')}" (load)="imageLoaded(nft.identifier)" />
     </div>
 
-    <span *ngIf="listMode === 'list'" class="drop-shadow-sm cursor-pointer" (click)="(listMode === 'list') ? goToNftDetail(nft): ''">Zucker #{{nft.identifier}}</span>
+    <span *ngIf="listMode === 'list'" class="drop-shadow-sm cursor-pointer dark:text-white" (click)="(listMode === 'list') ? goToNftDetail(nft): ''">Zucker #{{nft.identifier}}</span>
   
     <div [ngClass]="{
       'flex flex-row items-center h-10 overflow-hidden': true,
@@ -70,28 +70,28 @@
 
 
 <ng-template #loadingCard>
-    <div class="relative flex flex-col rounded-lg outline outline-offset-2 outline-2 outline-slate-200 overflow-hidden cursor-wait">
+    <div class="relative flex flex-col rounded-lg outline outline-offset-2 outline-2 outline-slate-200 dark:outline-slate-800 overflow-hidden cursor-wait">
       <div class="animate-pulse absolute w-full h-full">
           <div class="absolute text-white flex flex-col h-full w-full">
               <div class="flex flex-row p-2 gap-1 items-center w-full">
-                  <mat-icon [ngClass]="'w-5 text-slate-200 rounded drop-shadow-sm'">star</mat-icon>
-                  <span class=" h-4 w-1/2 bg-slate-200 rounded drop-shadow-sm"></span>
+                  <mat-icon [ngClass]="'w-5 text-slate-200 dark:text-slate-800 rounded drop-shadow-sm'">star</mat-icon>
+                  <span class=" h-4 w-1/2 bg-slate-200 dark:bg-slate-800 rounded drop-shadow-sm"></span>
               </div>
           </div>
           <div class="flex flex-col justify-center items-center h-full gap-4">
-              <mat-icon class="text-slate-200 scale-[3] h-full w-full">image</mat-icon>
+              <mat-icon class="text-slate-200 dark:text-slate-800 scale-[3] h-full w-full">image</mat-icon>
           </div>
       </div>
   
-      <div class="flex flex-col gap-2 h-52 bg-slate-50">
+      <div class="flex flex-col gap-2 h-52 bg-slate-50 dark:bg-slate-900">
           
       </div>
       <div class="flex flex-row items-center w-full z-10 h-8">
-          <div class="flex-auto py-2 h-8 bg-slate-200">
+          <div class="flex-auto py-2 h-8 bg-slate-200 dark:bg-slate-800">
           
           </div>
-          <div class="flex justify-center items-center min-h-full min-w-8 h-8 bg-slate-100">
-              <mat-icon class="text-slate-300 scale-75">share</mat-icon>
+          <div class="flex justify-center items-center min-h-full min-w-8 h-8 bg-slate-100 dark:bg-slate-900">
+              <mat-icon class="text-slate-300 dark:text-slate-700 scale-75">share</mat-icon>
           </div>
       </div>
     </div>

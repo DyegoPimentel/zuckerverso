@@ -30,6 +30,10 @@
             <mat-icon class="text-primary">apps</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="toggleTheme()">
+              <mat-icon>{{ isDarkMode() ? 'light_mode' : 'dark_mode'}} </mat-icon>
+              <span>{{ isDarkMode() ? 'Modo Claro' : 'Modo Escuro'}}</span>
+            </button>
             <button mat-menu-item (click)="logoutMetamask()">
               <mat-icon>logout</mat-icon>
               <span>Desconectar</span>
