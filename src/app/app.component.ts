@@ -57,7 +57,6 @@ export class AppComponent {
   initializeTheme(): void {
     const savedTheme = localStorage.getItem('theme');
     const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    console.log('prefers',window.matchMedia("(prefers-color-scheme: dark)").matches);
     if (savedTheme) {
       if (savedTheme === 'dark') {
         document.documentElement.classList.add('dark');
