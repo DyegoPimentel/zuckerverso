@@ -7,11 +7,13 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Clipboard,ClipboardModule } from '@angular/cdk/clipboard';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatDividerModule, MatIconModule, RouterOutlet, MatIconModule, MatMenuModule, RouterModule, MatTooltipModule],
+  imports: [CommonModule, MatButtonModule, MatDividerModule, MatIconModule, RouterOutlet, MatIconModule, MatMenuModule, RouterModule, MatTooltipModule,ClipboardModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -23,6 +25,8 @@ export class AppComponent {
 
   constructor(
     private _metamaskService: MetamaskService,
+    private clipboard: Clipboard,
+    private _snackBar: MatSnackBar,
   ) {
     this.initializeTheme();
 
@@ -79,6 +83,17 @@ export class AppComponent {
   }
 
   metamaskButton(): void {
+    if (localStorage.getItem('zkverso') && this._metamaskService.token) {
+      this.clipboard.copy(this._metamaskService.token);
+
+      this._snackBar.open('Sua chave pública foi copiada com sucesso 🚀', 'Ok', {
+        horizontalPosition: 'start',
+        verticalPosition: 'top',
+        duration: 5000,
+        panelClass: ['custom-snackbar']
+      });
+    };
+
     this._metamaskService.connectToMetaMask();
   }
 
